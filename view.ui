@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>View</class>
+ <widget class="QMainWindow" name="View">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -273,10 +273,10 @@ color: rgb(0, 0, 0);</string>
        <string notr="true">color: rgb(242, 242, 242);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Player 1</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="assets.qrc">:/images/assets/white_tower.png</pixmap>
+       <pixmap>:/images/assets/white_tower.png</pixmap>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -932,8 +932,6 @@ border-color: rgb(255, 255, 255);</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="assets.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

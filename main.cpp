@@ -1,4 +1,6 @@
-#include "mainwindow.h"
+#include "view.h"
+#include "controller.h"
+#include "model.h"
 
 #include <QApplication>
 #include <QTableWidget>
@@ -8,8 +10,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    View w;
     w.show();
+
+    CModel model = CModel();
+    CController controller = CController(&model, &w);
 
     QTableWidget *tableWidget = w.findChild<QTableWidget*>("chessBoardTable");
 

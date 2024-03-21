@@ -14,9 +14,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        view.cpp
+        view.h
+        view.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -28,6 +28,30 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         model.cpp
         controller.cpp
         assets.qrc
+        chess_piece.cpp
+        chess_piece.h
+        piece_color.h
+        game.cpp
+        game.h
+        pawn.h
+        pawn.cpp
+        rook.h
+        rook.cpp
+        knight.h
+        knight.cpp
+        bishop.h
+        bishop.cpp
+        king.h
+        king.cpp
+        queen.h
+        queen.cpp
+        timer.h
+        timer.cpp
+        player.h
+        player.cpp
+        chess_board.h
+        chess_board.cpp
+
 
     )
 # Define target properties for Android with Qt 6 as:
