@@ -1,6 +1,6 @@
 #include "timer.h"
 
-Timer::Timer(int _actualTime): actualTime(_actualTime) {};
+Timer::Timer(unsigned int _actualTime): actualTime(_actualTime) {};
 
 void Timer::start_timer() {
 
@@ -18,6 +18,6 @@ unsigned int Timer::getActualTime() {
     return this->actualTime;
 }
 
-void Timer::setActualTime(int actualTime) {
+void Timer::setActualTime(unsigned int actualTime) {
     this->actualTime = actualTime;
 }

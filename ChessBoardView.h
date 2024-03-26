@@ -1,0 +1,4 @@
+#ifndef CHESSBOARDVIEW_H
+#define CHESSBOARDVIEW_H
+
+#endif // CHESSBOARDVIEW_H

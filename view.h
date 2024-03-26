@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "chess_piece.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class View;
@@ -16,6 +18,10 @@ class View : public QMainWindow
 public:
     View(QWidget *parent = nullptr);
     ~View();
+
+    void renderChessBoard();
+
+    void updateChessBoard(std::vector<std::vector<ChessPiece*>> chessBoardState);
 
 private:
     Ui::View *ui;

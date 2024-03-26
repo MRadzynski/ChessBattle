@@ -9,6 +9,8 @@ private:
     std::vector<std::vector<ChessPiece*>> chessBoardState;
 
 public:
+    ChessBoard();
+
     void initializeChessBoard();
 
     void movePiece(ChessPiece* chessPiece);

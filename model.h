@@ -4,7 +4,18 @@
 #include <QAbstractListModel>
 #include <QStringList>
 
+#include "game.h"
+
 class CModel {
+private:
+    Game* game;
+
+public:
+    CModel();
+
+    Game* getGame();
+
+    void setGame(Game* game);
 
 };
 

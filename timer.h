@@ -5,7 +5,7 @@ class Timer {
 private:
     unsigned int actualTime;
 public:
-    Timer(int _actualTime);
+    Timer(unsigned int _actualTime);
 
     void start_timer();
 
@@ -15,7 +15,7 @@ public:
 
     unsigned int getActualTime();
 
-    void setActualTime(int actualTime);
+    void setActualTime(unsigned int actualTime);
 };
 
 #endif // TIMER_H

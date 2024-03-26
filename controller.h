@@ -9,12 +9,22 @@ class CController : public QObject {
     Q_OBJECT
 
 public:
-    CController(CModel* _model, QMainWindow* _view, QObject* _parent = nullptr) : model(_model), view(_view) {};
-    ~CController(){};
+    CController(CModel* _model, View* _view, QObject* _parent);
+    ~CController();
+
+    void setupGame();
+
+    CModel* getModel();
+
+    View* getView();
+
+    void setModel(CModel* model);
+
+    void setView(View* view);
 
 private:
     CModel *model;
-    QMainWindow *view;
+    View *view;
 };
 
 #endif // CONTROLLER_H

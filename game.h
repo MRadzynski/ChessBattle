@@ -2,25 +2,39 @@
 #define GAME_H
 
 #include "player.h"
+#include "chess_board.h"
+#include <vector>
 
 class Game {
 private:
-    Player currentPlayer;
+    std::vector<Player*> players;
+    Player* currentPlayer;
+    ChessBoard* chessBoard;
 
 public:
-    void start_game();
+    Game();
 
-    void restart_game();
+    void initGame();
 
-    void end_game();
+    void restartGame();
 
-    void playTurn(Player player);
+    void endGame();
+
+    void playTurn(Player* player);
 
     void promotePawn();
 
-    Player getCurrentPlayer();
+    Player* getCurrentPlayer();
 
-    void setCurrentPlayer(Player player);
+    std::vector<Player*> getPlayers();
+
+    ChessBoard* getChessBoard();
+
+    void setCurrentPlayer(Player* player);
+
+    void setPlayers(std::vector<Player*> players);
+
+    void setChessBoard(ChessBoard* chessboard);
 };
 
 #endif // GAME_H
