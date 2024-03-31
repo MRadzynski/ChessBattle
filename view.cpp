@@ -1,8 +1,10 @@
 #include "view.h"
+#include "controller.h"
 #include "./ui_view.h"
 
 #include <QMainWindow>
 #include <QWidget>
+#include <QDebug>
 
 View::View(QWidget *parent)
     : QMainWindow(parent)
@@ -67,6 +69,17 @@ void View::updateChessBoard(std::vector<std::vector<ChessPiece*>> chessBoardStat
                     label->setStyleSheet("background-color: transparent;");
 
                     tableWidget->setCellWidget(row, col, label);
+                } else {
+                      qDebug() << "YSYSYYS!";
+                    QLabel *oldLabel = qobject_cast<QLabel*>(tableWidget->cellWidget(row, col));
+                    oldLabel->setPixmap(QPixmap());
+                    // item->text().clear();
+                    // item->setIcon(nullptr);
+                    // QLabel *label = new QLabel();
+                    // label->setPixmap(nullptr);
+                    // label->setStyleSheet("background-color: transparent;");
+
+                    // tableWidget->setCellWidget(row, col, label);
                 }
             }
         }
@@ -75,3 +88,18 @@ void View::updateChessBoard(std::vector<std::vector<ChessPiece*>> chessBoardStat
         qDebug() << "Table widget not found!";
     }
 }
+
+CController* View::getController() {
+    return this->controller;
+}
+
+void View::setController(CController* controller) {
+    this->controller = controller;
+}
+
+
+void View::on_chessBoardTable_cellClicked(int row, int column) {
+    qDebug() << "lool "<< row << ", "<< column;
+    this->getController()->onCellClicked(row, column);
+}
+

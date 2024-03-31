@@ -13,6 +13,7 @@ Game::Game() {
     this->chessBoard = chessBoard;
     this->currentPlayer = &whitePlayer;
     this->players = players;
+    this->selectedPiece = nullptr;
 }
 
 void Game::initGame() {
@@ -47,6 +48,10 @@ std::vector<Player*> Game::getPlayers() {
     return this->players;
 }
 
+ChessPiece* Game::getSelectedPiece() {
+    return this->selectedPiece;
+}
+
 void Game::setCurrentPlayer(Player* currentPlayer) {
     this->currentPlayer = currentPlayer;
 }
@@ -57,4 +62,8 @@ void Game::setChessBoard(ChessBoard* chessBoard) {
 
 void Game::setPlayers(std::vector<Player*> players) {
     this->players = players;
+}
+
+void Game::setSelectedPiece(ChessPiece* selectedPiece) {
+    this->selectedPiece = selectedPiece;
 }

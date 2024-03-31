@@ -10,6 +10,7 @@ private:
     std::vector<Player*> players;
     Player* currentPlayer;
     ChessBoard* chessBoard;
+    ChessPiece* selectedPiece;
 
 public:
     Game();
@@ -30,11 +31,15 @@ public:
 
     ChessBoard* getChessBoard();
 
+    ChessPiece* getSelectedPiece();
+
     void setCurrentPlayer(Player* player);
 
     void setPlayers(std::vector<Player*> players);
 
     void setChessBoard(ChessBoard* chessboard);
+
+    void setSelectedPiece(ChessPiece* selectedPiece);
 };
 
 #endif // GAME_H

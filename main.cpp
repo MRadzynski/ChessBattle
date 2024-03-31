@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 
     CController* controller = new CController(model, &v, nullptr);
 
+    v.setController(controller);
+
     controller->setupGame();
 
     return a.exec();

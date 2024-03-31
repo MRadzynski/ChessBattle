@@ -5,6 +5,8 @@
 
 #include "chess_piece.h"
 
+class CController;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class View;
@@ -23,7 +25,15 @@ public:
 
     void updateChessBoard(std::vector<std::vector<ChessPiece*>> chessBoardState);
 
+    void setController(CController* controller);
+
+    CController* getController();
+
+private slots:
+    void on_chessBoardTable_cellClicked(int row, int column);
+
 private:
     Ui::View *ui;
+    CController* controller;
 };
 #endif // VIEW_H

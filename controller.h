@@ -22,6 +22,8 @@ public:
 
     void setView(View* view);
 
+    void onCellClicked(int row, int col);
+
 private:
     CModel *model;
     View *view;
