@@ -5,7 +5,7 @@
 
 class King : public ChessPiece {
 public:
-    King(PieceColor color, int posX, int posY, QString iconPath);
+    King(PieceColor color, int posX, int posY, QString iconPath, std::string name);
 
     bool isValidMove(int newX, int newY, const std::vector<std::vector<ChessPiece*>>& board);
 };

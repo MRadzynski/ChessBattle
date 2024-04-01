@@ -33,23 +33,21 @@ void CController::onCellClicked(int row, int col) {
             this->getModel()->getGame()->setSelectedPiece(selectedPiece);
         }
     } else {
-        int selectedPiecePosX = this->getModel()->getGame()->getSelectedPiece()->getPosX();
-        int selectedPiecePosY = this->getModel()->getGame()->getSelectedPiece()->getPosY();
-
+        ChessPiece* selectedPiece = this->getModel()->getGame()->getSelectedPiece();
+        int selectedPiecePosX = selectedPiece->getPosX();
+        int selectedPiecePosY = selectedPiece->getPosY();
         std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getModel()->getGame()->getChessBoard()->getChessBoardState();
+
+        selectedPiece->setPosX(row);
+        selectedPiece->setPosY(col);
         newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
-        newChessBoardState[row][col] = this->getModel()->getGame()->getSelectedPiece();
+        newChessBoardState[row][col] = selectedPiece;
 
         this->getModel()->getGame()->getChessBoard()->setChessBoardState(newChessBoardState);
-        this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
         this->getModel()->getGame()->setSelectedPiece(nullptr);
+
+        this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
     }
 
-    if(this->getModel()->getGame()->getChessBoard()->getChessBoardState()[row][col] == nullptr) {
-        qDebug() << "Empty cell";
-    } else {
-        qDebug() << "Piece cell";
-    }
-    qDebug() << "row: "<<row << " col: "<<col;
-    // qDebug() << "piece: " << this->getModel()->getGame()->getChessBoard()->getChessBoardState()[row][col]->getPosX();
+    this->getModel()->getGame()->getChessBoard()->displayChessBoardState();
 }

@@ -13,9 +13,10 @@ private:
     int posX;
     int posY;
     QString iconPath;
+    std::string name;
 
 public:
-    ChessPiece(PieceColor _color, int _posX, int _posY, QString iconPath);
+    ChessPiece(PieceColor _color, int _posX, int _posY, QString iconPath, std::string name);
 
     PieceColor getColor();
 
@@ -25,6 +26,8 @@ public:
 
     QString getIconPath();
 
+    std::string getName();
+
     void setColor(PieceColor color);
 
     void setPosX(int posX);
@@ -32,6 +35,8 @@ public:
     void setPosY(int posX);
 
     void setIconPath(QString iconPath);
+
+    void setName(std::string name);
 
     virtual bool isValidMove(int newX, int newY, const std::vector<std::vector<ChessPiece*>>& board) = 0;
 };

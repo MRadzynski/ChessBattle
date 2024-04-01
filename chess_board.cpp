@@ -7,6 +7,8 @@
 #include "queen.h"
 #include "pawn.h"
 
+#include <iostream>
+
 ChessBoard::ChessBoard() {
     std::vector<std::vector<ChessPiece*>> initChessBoardState(8, std::vector<ChessPiece*>(8, nullptr));
     this->chessBoardState = initChessBoardState;
@@ -15,47 +17,47 @@ ChessBoard::ChessBoard() {
 void ChessBoard::initializeChessBoard() {
     std::vector<std::vector<ChessPiece*>> initChessBoardState(8, std::vector<ChessPiece*>(8, nullptr));
 
-    Rook* blackFirstRook = new Rook(PieceColor::BLACK, 0, 0, ":/images/assets/rook_black.png");
-    Rook* blackSecondRook = new Rook(PieceColor::BLACK, 7, 0, ":/images/assets/rook_black.png");
+    Rook* blackFirstRook = new Rook(PieceColor::BLACK, 0, 0, ":/images/assets/rook_black.png", "BRK");
+    Rook* blackSecondRook = new Rook(PieceColor::BLACK, 0, 7, ":/images/assets/rook_black.png", "BRK");
 
-    Knight* blackFirstKnight = new Knight(PieceColor::BLACK, 1, 0, ":/images/assets/knight_black.png");
-    Knight* blackSecondKnight = new Knight(PieceColor::BLACK, 6, 0, ":/images/assets/knight_black.png");
+    Knight* blackFirstKnight = new Knight(PieceColor::BLACK, 0, 1, ":/images/assets/knight_black.png", "BKT");
+    Knight* blackSecondKnight = new Knight(PieceColor::BLACK, 0, 6, ":/images/assets/knight_black.png", "BKT");
 
-    Bishop* blackFirstBishop = new Bishop(PieceColor::BLACK, 2, 0, ":/images/assets/bishop_black.png");
-    Bishop* blackSecondBishop = new Bishop(PieceColor::BLACK, 5, 0, ":/images/assets/bishop_black.png");
+    Bishop* blackFirstBishop = new Bishop(PieceColor::BLACK, 0, 2, ":/images/assets/bishop_black.png", "BBP");
+    Bishop* blackSecondBishop = new Bishop(PieceColor::BLACK, 0, 5, ":/images/assets/bishop_black.png", "BBP");
 
-    King* blackKing = new King(PieceColor::BLACK, 3, 0, ":/images/assets/king_black.png");
-    Queen* blackQueen = new Queen(PieceColor::BLACK, 4, 0, ":/images/assets/queen_black.png");
+    King* blackKing = new King(PieceColor::BLACK, 0, 3, ":/images/assets/king_black.png", "BKG");
+    Queen* blackQueen = new Queen(PieceColor::BLACK, 0, 4, ":/images/assets/queen_black.png", "BQN");
 
-    Pawn* blackFirstPawn = new Pawn(PieceColor::BLACK, 0, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackSecondPawn = new Pawn(PieceColor::BLACK, 1, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackThirdPawn = new Pawn(PieceColor::BLACK, 2, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackFourthPawn = new Pawn(PieceColor::BLACK, 3, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackFifthPawn = new Pawn(PieceColor::BLACK, 4, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackSixthPawn = new Pawn(PieceColor::BLACK, 5, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackSeventhPawn = new Pawn(PieceColor::BLACK, 6, 0, ":/images/assets/pawn_black.png");
-    Pawn* blackEighthPawn = new Pawn(PieceColor::BLACK, 7, 0, ":/images/assets/pawn_black.png");
+    Pawn* blackFirstPawn = new Pawn(PieceColor::BLACK, 1, 0, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackSecondPawn = new Pawn(PieceColor::BLACK, 1, 1, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackThirdPawn = new Pawn(PieceColor::BLACK, 1, 2, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackFourthPawn = new Pawn(PieceColor::BLACK, 1, 3, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackFifthPawn = new Pawn(PieceColor::BLACK, 1, 4, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackSixthPawn = new Pawn(PieceColor::BLACK, 1, 5, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackSeventhPawn = new Pawn(PieceColor::BLACK, 1, 6, ":/images/assets/pawn_black.png", "BPN");
+    Pawn* blackEighthPawn = new Pawn(PieceColor::BLACK, 1, 7, ":/images/assets/pawn_black.png", "BPN");
 
-    Rook* whiteFirstRook = new Rook(PieceColor::WHITE, 7, 0, ":/images/assets/rook_white.png");
-    Rook* whiteSecondRook = new Rook(PieceColor::WHITE, 7, 7, ":/images/assets/rook_white.png");
+    Rook* whiteFirstRook = new Rook(PieceColor::WHITE, 7, 0, ":/images/assets/rook_white.png", "WRK");
+    Rook* whiteSecondRook = new Rook(PieceColor::WHITE, 7, 7, ":/images/assets/rook_white.png", "WRK");
 
-    Knight* whiteFirstKnight = new Knight(PieceColor::WHITE, 7, 1, ":/images/assets/knight_white.png");
-    Knight* whiteSecondKnight = new Knight(PieceColor::WHITE, 7, 6, ":/images/assets/knight_white.png");
+    Knight* whiteFirstKnight = new Knight(PieceColor::WHITE, 7, 1, ":/images/assets/knight_white.png", "WKT");
+    Knight* whiteSecondKnight = new Knight(PieceColor::WHITE, 7, 6, ":/images/assets/knight_white.png", "WKT");
 
-    Bishop* whiteFirstBishop = new Bishop(PieceColor::WHITE, 7, 2, ":/images/assets/bishop_white.png");
-    Bishop* whiteSecondBishop = new Bishop(PieceColor::WHITE, 7, 5, ":/images/assets/bishop_white.png");
+    Bishop* whiteFirstBishop = new Bishop(PieceColor::WHITE, 7, 2, ":/images/assets/bishop_white.png", "WBP");
+    Bishop* whiteSecondBishop = new Bishop(PieceColor::WHITE, 7, 5, ":/images/assets/bishop_white.png", "WBP");
 
-    King* whiteKing = new King(PieceColor::WHITE, 7, 3, ":/images/assets/king_white.png");
-    Queen* whiteQueen = new Queen(PieceColor::WHITE, 7, 4, ":/images/assets/queen_white.png");
+    King* whiteKing = new King(PieceColor::WHITE, 7, 3, ":/images/assets/king_white.png", "WKG");
+    Queen* whiteQueen = new Queen(PieceColor::WHITE, 7, 4, ":/images/assets/queen_white.png", "WQN");
 
-    Pawn* whiteFirstPawn = new Pawn(PieceColor::WHITE, 0, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteSecondPawn = new Pawn(PieceColor::WHITE, 1, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteThirdPawn = new Pawn(PieceColor::WHITE, 2, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteFourthPawn = new Pawn(PieceColor::WHITE, 3, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteFifthPawn = new Pawn(PieceColor::WHITE, 4, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteSixthPawn = new Pawn(PieceColor::WHITE, 5, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteSeventhPawn = new Pawn(PieceColor::WHITE, 6, 0, ":/images/assets/pawn_white.png");
-    Pawn* whiteEighthPawn = new Pawn(PieceColor::WHITE, 7, 0, ":/images/assets/pawn_white.png");
+    Pawn* whiteFirstPawn = new Pawn(PieceColor::WHITE, 6, 0, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteSecondPawn = new Pawn(PieceColor::WHITE, 6, 1, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteThirdPawn = new Pawn(PieceColor::WHITE, 6, 2, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteFourthPawn = new Pawn(PieceColor::WHITE, 6, 3, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteFifthPawn = new Pawn(PieceColor::WHITE, 6, 4, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteSixthPawn = new Pawn(PieceColor::WHITE, 6, 5, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteSeventhPawn = new Pawn(PieceColor::WHITE, 6, 6, ":/images/assets/pawn_white.png", "WPN");
+    Pawn* whiteEighthPawn = new Pawn(PieceColor::WHITE, 6, 7, ":/images/assets/pawn_white.png", "WPN");
 
     initChessBoardState[0][0] = blackFirstRook;
     initChessBoardState[0][1] = blackFirstKnight;
@@ -108,5 +110,29 @@ std::vector<std::vector<ChessPiece*>> ChessBoard::getChessBoardState() {
 
 void ChessBoard::setChessBoardState(std::vector<std::vector<ChessPiece*>> chessBoardState) {
     this->chessBoardState = chessBoardState;
+}
+
+void ChessBoard::displayChessBoardState() {
+    // for (auto& row : this->getChessBoardState()) {
+    //     for (auto& piece : row) {
+    //         if(piece == nullptr) {
+    //             std::cout << "---" << " ";
+    //         } else {
+    //             std::cout << piece->getName() << " ";
+    //         }
+    //     }
+    //     std::cout<<std::endl;
+    // }
+
+    for (auto& row : this->getChessBoardState()) {
+        for (auto& piece : row) {
+            if(piece == nullptr) {
+                std::cout << "---" << " ";
+            } else {
+                std::cout << piece->getPosX() << "," << piece->getPosY()<< " ";
+            }
+        }
+        std::cout<<std::endl;
+    }
 }
 

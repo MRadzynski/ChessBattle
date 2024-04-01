@@ -63,23 +63,14 @@ void View::updateChessBoard(std::vector<std::vector<ChessPiece*>> chessBoardStat
                 ChessPiece* piece = chessBoardState[row][col];
 
                 if(piece != nullptr) {
-                    qDebug()<< piece->getIconPath();
                     QLabel *label = new QLabel();
                     label->setPixmap(QPixmap(piece->getIconPath()));
                     label->setStyleSheet("background-color: transparent;");
 
                     tableWidget->setCellWidget(row, col, label);
                 } else {
-                      qDebug() << "YSYSYYS!";
                     QLabel *oldLabel = qobject_cast<QLabel*>(tableWidget->cellWidget(row, col));
                     oldLabel->setPixmap(QPixmap());
-                    // item->text().clear();
-                    // item->setIcon(nullptr);
-                    // QLabel *label = new QLabel();
-                    // label->setPixmap(nullptr);
-                    // label->setStyleSheet("background-color: transparent;");
-
-                    // tableWidget->setCellWidget(row, col, label);
                 }
             }
         }
@@ -99,7 +90,6 @@ void View::setController(CController* controller) {
 
 
 void View::on_chessBoardTable_cellClicked(int row, int column) {
-    qDebug() << "lool "<< row << ", "<< column;
     this->getController()->onCellClicked(row, column);
 }
 

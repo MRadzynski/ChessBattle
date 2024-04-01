@@ -20,6 +20,8 @@ public:
     std::vector<std::vector<ChessPiece*>> getChessBoardState();
 
     void setChessBoardState(std::vector<std::vector<ChessPiece*>> chessBoardState);
+
+    void displayChessBoardState();
 };
 
 #endif // CHESS_BOARD_H

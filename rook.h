@@ -5,7 +5,7 @@
 
 class Rook : public ChessPiece {
 public:
-    Rook(PieceColor color, int posX, int posY, QString iconPath);
+    Rook(PieceColor color, int posX, int posY, QString iconPath, std::string name);
 
     bool isValidMove(int newX, int newY, const std::vector<std::vector<ChessPiece*>>& board);
 };
