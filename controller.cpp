@@ -31,7 +31,7 @@ void CController::onCellClicked(int row, int col) {
     this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
 
     if(this->getModel()->getGame()->getChessBoard()->getSelectedPiece() != nullptr) {
-        this->getView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece());
+        this->getView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece(), this->getModel()->getGame()->getChessBoard()->getChessBoardState());
     } else {
         this->getView()->unhighlightSelectedPiece();
     }

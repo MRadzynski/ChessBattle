@@ -93,14 +93,26 @@ void View::on_chessBoardTable_cellClicked(int row, int column) {
     this->getController()->onCellClicked(row, column);
 }
 
-void View::highlightSelectedPiece(ChessPiece* selectedPiece) {
+void View::highlightSelectedPiece(ChessPiece* selectedPiece, std::vector<std::vector<ChessPiece*>> chessBoard) {
     QTableWidget *tableWidget = this->findChild<QTableWidget*>("chessBoardTable");
 
     if(tableWidget) {
+        for(int row = 0; row < 8; ++row) {
+            for(int col = 0; col < 8; ++col) {
+                QTableWidgetItem* item = tableWidget -> item(row, col);
+
+                bool isValidMove = selectedPiece->isValidMove(row, col, chessBoard);
+
+                if(isValidMove) {
+                    item->setBackground(QColor(244, 67, 54));
+                }
+            }
+        }
+
         int row = selectedPiece->getPosX();
         int col = selectedPiece->getPosY();
-        QTableWidgetItem* item = tableWidget -> item(row, col);
 
+        QTableWidgetItem* item = tableWidget -> item(row, col);
         item->setBackground(QColor(76, 175, 115));
     } else {
         qDebug() << "Table widget not found!";

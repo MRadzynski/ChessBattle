@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <QDebug>
+
 Game::Game() {
     std::vector<Player*> players;
     Player blackPlayer = Player(PieceColor::BLACK);
@@ -43,17 +45,35 @@ void Game::makeMove(int row, int col) {
         }
     } else {
         ChessPiece* selectedPiece = this->getChessBoard()->getSelectedPiece();
-        int selectedPiecePosX = selectedPiece->getPosX();
-        int selectedPiecePosY = selectedPiece->getPosY();
-        std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
 
-        selectedPiece->setPosX(row);
-        selectedPiece->setPosY(col);
-        newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
-        newChessBoardState[row][col] = selectedPiece;
+        bool isValidMove = selectedPiece->isValidMove(row, col, this->getChessBoard()->getChessBoardState());
+        qDebug() << "isValid: "<< isValidMove;
 
-        this->getChessBoard()->setChessBoardState(newChessBoardState);
-        this->getChessBoard()->setSelectedPiece(nullptr);
+        if(isValidMove) {
+            int selectedPiecePosX = selectedPiece->getPosX();
+            int selectedPiecePosY = selectedPiece->getPosY();
+            std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
+
+            selectedPiece->setPosX(row);
+            selectedPiece->setPosY(col);
+            newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
+            newChessBoardState[row][col] = selectedPiece;
+
+            this->getChessBoard()->setChessBoardState(newChessBoardState);
+            this->getChessBoard()->setSelectedPiece(nullptr);
+        }
+
+        // int selectedPiecePosX = selectedPiece->getPosX();
+        // int selectedPiecePosY = selectedPiece->getPosY();
+        // std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
+
+        // selectedPiece->setPosX(row);
+        // selectedPiece->setPosY(col);
+        // newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
+        // newChessBoardState[row][col] = selectedPiece;
+
+        // this->getChessBoard()->setChessBoardState(newChessBoardState);
+        // this->getChessBoard()->setSelectedPiece(nullptr);
     }
 
     this->getChessBoard()->displayChessBoardState();

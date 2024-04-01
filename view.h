@@ -29,7 +29,7 @@ public:
 
     CController* getController();
 
-    void highlightSelectedPiece(ChessPiece* selectedPiece);
+    void highlightSelectedPiece(ChessPiece* selectedPiece, std::vector<std::vector<ChessPiece*>> chessBoard);
 
     void unhighlightSelectedPiece();
 
