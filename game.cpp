@@ -13,7 +13,6 @@ Game::Game() {
     this->chessBoard = chessBoard;
     this->currentPlayer = &whitePlayer;
     this->players = players;
-    this->selectedPiece = nullptr;
 }
 
 void Game::initGame() {
@@ -36,6 +35,30 @@ void Game::promotePawn() {
 
 }
 
+void Game::makeMove(int row, int col) {
+    if(this->getChessBoard()->getSelectedPiece() == nullptr) {
+        if(this->getChessBoard()->getChessBoardState()[row][col] != nullptr) {
+            ChessPiece* selectedPiece = this->getChessBoard()->getChessBoardState()[row][col];
+            this->getChessBoard()->setSelectedPiece(selectedPiece);
+        }
+    } else {
+        ChessPiece* selectedPiece = this->getChessBoard()->getSelectedPiece();
+        int selectedPiecePosX = selectedPiece->getPosX();
+        int selectedPiecePosY = selectedPiece->getPosY();
+        std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
+
+        selectedPiece->setPosX(row);
+        selectedPiece->setPosY(col);
+        newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
+        newChessBoardState[row][col] = selectedPiece;
+
+        this->getChessBoard()->setChessBoardState(newChessBoardState);
+        this->getChessBoard()->setSelectedPiece(nullptr);
+    }
+
+    this->getChessBoard()->displayChessBoardState();
+}
+
 Player* Game::getCurrentPlayer() {
     return this->currentPlayer;
 }
@@ -46,10 +69,6 @@ ChessBoard* Game::getChessBoard() {
 
 std::vector<Player*> Game::getPlayers() {
     return this->players;
-}
-
-ChessPiece* Game::getSelectedPiece() {
-    return this->selectedPiece;
 }
 
 void Game::setCurrentPlayer(Player* currentPlayer) {
@@ -64,6 +83,3 @@ void Game::setPlayers(std::vector<Player*> players) {
     this->players = players;
 }
 
-void Game::setSelectedPiece(ChessPiece* selectedPiece) {
-    this->selectedPiece = selectedPiece;
-}
