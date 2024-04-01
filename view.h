@@ -29,6 +29,10 @@ public:
 
     CController* getController();
 
+    void highlightSelectedPiece(ChessPiece* selectedPiece);
+
+    void unhighlightSelectedPiece();
+
 private slots:
     void on_chessBoardTable_cellClicked(int row, int column);
 

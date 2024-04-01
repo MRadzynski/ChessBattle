@@ -29,4 +29,10 @@ void CController::setView(View* view) {
 void CController::onCellClicked(int row, int col) {
     this->getModel()->getGame()->makeMove(row, col);
     this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+
+    if(this->getModel()->getGame()->getChessBoard()->getSelectedPiece() != nullptr) {
+        this->getView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece());
+    } else {
+        this->getView()->unhighlightSelectedPiece();
+    }
 }

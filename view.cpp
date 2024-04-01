@@ -93,3 +93,37 @@ void View::on_chessBoardTable_cellClicked(int row, int column) {
     this->getController()->onCellClicked(row, column);
 }
 
+void View::highlightSelectedPiece(ChessPiece* selectedPiece) {
+    QTableWidget *tableWidget = this->findChild<QTableWidget*>("chessBoardTable");
+
+    if(tableWidget) {
+        int row = selectedPiece->getPosX();
+        int col = selectedPiece->getPosY();
+        QTableWidgetItem* item = tableWidget -> item(row, col);
+
+        item->setBackground(QColor(76, 175, 115));
+    } else {
+        qDebug() << "Table widget not found!";
+    }
+}
+
+void View::unhighlightSelectedPiece() {
+    QTableWidget *tableWidget = this->findChild<QTableWidget*>("chessBoardTable");
+
+    if(tableWidget) {
+        for(int row = 0; row < 8; ++row) {
+            for(int col = 0; col < 8; ++col) {
+                QTableWidgetItem* item = tableWidget -> item(row, col);
+
+                if((row+col) % 2 == 0) {
+                    item->setBackground(QColor(242,242,242));
+                } else {
+                    item->setBackground(QColor(51,51,51));
+                }
+            }
+        }
+    } else {
+        qDebug() << "Table widget not found!";
+    }
+}
+
