@@ -7,7 +7,7 @@ class Bishop : public ChessPiece {
 public:
     Bishop(PieceColor color, int posX, int posY, QString iconPath, std::string name);
 
-    bool isValidMove(int newX, int newY, const std::vector<std::vector<ChessPiece*>>& board);
+    bool isValidMove(int potentialPosX, int potentialPosY, const std::vector<std::vector<ChessPiece*>>& board);
 };
 
 

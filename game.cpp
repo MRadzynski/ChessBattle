@@ -61,6 +61,8 @@ void Game::makeMove(int row, int col) {
 
             this->getChessBoard()->setChessBoardState(newChessBoardState);
             this->getChessBoard()->setSelectedPiece(nullptr);
+        } else {
+            this->getChessBoard()->setSelectedPiece(nullptr);
         }
 
         // int selectedPiecePosX = selectedPiece->getPosX();

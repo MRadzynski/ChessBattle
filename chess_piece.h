@@ -38,7 +38,7 @@ public:
 
     void setName(std::string name);
 
-    virtual bool isValidMove(int newX, int newY, const std::vector<std::vector<ChessPiece*>>& board) = 0;
+    virtual bool isValidMove(int potentialPosX, int potentialPosY, const std::vector<std::vector<ChessPiece*>>& board) = 0;
 };
 
 #endif // CHESS_PIECE_H

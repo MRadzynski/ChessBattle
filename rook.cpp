@@ -1,8 +1,5 @@
 #include "rook.h"
 
-#include <iostream>
-#include <algorithm>
-
 Rook::Rook(PieceColor color, int posX, int posY, QString iconPath, std::string name): ChessPiece(color, posX, posY, iconPath, name){};
 
 bool Rook::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<std::vector<ChessPiece*>>& board) {
@@ -12,10 +9,16 @@ bool Rook::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<
     };
     std::vector<movement> possibleMoves;
 
+    //TODO: add playerColor in the params
+    PieceColor playerColor = PieceColor::WHITE;
+
     for(int row = this->getPosX()+1; row < 8; row++) {
         if(board[row][this->getPosY()] == nullptr){
             possibleMoves.push_back({row, this->getPosY()});
         } else {
+            if(board[row][this->getPosY()]->getColor() != playerColor) {
+                possibleMoves.push_back({row, this->getPosY()});
+            }
             break;
         }
     }
@@ -24,6 +27,10 @@ bool Rook::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<
         if(board[row][this->getPosY()] == nullptr){
             possibleMoves.push_back({row, this->getPosY()});
         } else {
+            if(board[row][this->getPosY()]->getColor() != playerColor) {
+                possibleMoves.push_back({row, this->getPosY()});
+
+            }
             break;
         }
     }
@@ -32,6 +39,9 @@ bool Rook::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<
         if(board[this->getPosX()][col] == nullptr){
             possibleMoves.push_back({this->getPosX(), col});
         } else {
+            if(board[this->getPosX()][col]->getColor() != playerColor) {
+                possibleMoves.push_back({this->getPosX(), col});
+            }
             break;
         }
     }
@@ -40,6 +50,9 @@ bool Rook::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<
         if(board[this->getPosX()][col] == nullptr){
             possibleMoves.push_back({this->getPosX(), col});
         } else {
+            if(board[this->getPosX()][col]->getColor() != playerColor) {
+                possibleMoves.push_back({this->getPosX(), col});
+            }
             break;
         }
     }
