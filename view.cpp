@@ -101,7 +101,7 @@ void View::highlightSelectedPiece(ChessPiece* selectedPiece, std::vector<std::ve
             for(int col = 0; col < 8; ++col) {
                 QTableWidgetItem* item = tableWidget -> item(row, col);
 
-                bool isValidMove = selectedPiece->isValidMove(row, col, chessBoard);
+                bool isValidMove = selectedPiece->isValidMove(row, col, chessBoard, selectedPiece->getColor());
 
                 if(isValidMove) {
                     item->setBackground(QColor(244, 67, 54));

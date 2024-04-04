@@ -10,7 +10,7 @@ private:
 public:
     Pawn(PieceColor color, int posX, int posY, QString iconPath, std::string name);
 
-    bool isValidMove(int potentialPosX, int potentialPosY, const std::vector<std::vector<ChessPiece*>>& board);
+    bool isValidMove(int potentialPosX, int potentialPosY, const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor);
 
     int getInitPosX();
 

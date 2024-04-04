@@ -8,7 +8,7 @@ Pawn::Pawn(PieceColor color, int posX, int posY, QString iconPath, std::string n
     this->initPosY = posY;
 };
 
-bool Pawn::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<std::vector<ChessPiece*>>& board) {
+bool Pawn::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor) {
     struct movement {
         int x;
         int y;
@@ -20,9 +20,6 @@ bool Pawn::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<
     if(this->getColor() == PieceColor::WHITE) {
         playerMoveDirection = -1;
     }
-
-    //TODO: add playerColor in the params
-    PieceColor playerColor = PieceColor::WHITE;
 
     for(int col = -1; col < 2; col++) {
         int pieceNextRow = this->getPosX()+playerMoveDirection;

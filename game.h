@@ -24,6 +24,8 @@ public:
 
     void promotePawn();
 
+    void switchPlayer();
+
     void makeMove(int row, int col);
 
     Player* getCurrentPlayer();
