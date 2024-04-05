@@ -7,6 +7,7 @@ Game::Game() {
     ChessBoard* chessBoard = new ChessBoard();
     Player* blackPlayer = new Player(PieceColor::BLACK);
     Player* whitePlayer = new Player(PieceColor::WHITE);
+    Player* winner = nullptr;
 
     players.push_back(blackPlayer);
     players.push_back(whitePlayer);
@@ -14,6 +15,7 @@ Game::Game() {
     this->chessBoard = chessBoard;
     this->currentPlayer = whitePlayer;
     this->players = players;
+    this->winner = winner;
 }
 
 void Game::initGame() {
@@ -36,7 +38,21 @@ void Game::restartGame() {
     this->getChessBoard()->setChessBoardState(chessBoard);
     this->getChessBoard()->initializeChessBoard();
 
+    this->setWinner(nullptr);
     this->setCurrentPlayer(this->players[1]);
+}
+
+void Game::surrender() {
+    Player* winner;
+
+    if(this->currentPlayer->getColor() == PieceColor::BLACK) {
+        winner = this->players[1];
+    } else {
+        winner = this->players[0];
+    }
+
+    this->getChessBoard()->setSelectedPiece(nullptr);
+    this->setWinner(winner);
 }
 
 void Game::endGame() {
@@ -60,6 +76,8 @@ void Game::switchPlayer() {
 }
 
 void Game::makeMove(int row, int col) {
+    if(this->getWinner() != nullptr) return;
+
     if(this->getChessBoard()->getSelectedPiece() == nullptr) {
         if(this->getChessBoard()->getChessBoardState()[row][col] != nullptr && this->getChessBoard()->getChessBoardState()[row][col]->getColor() == this->currentPlayer->getColor()) {
             ChessPiece* selectedPiece = this->getChessBoard()->getChessBoardState()[row][col];
@@ -103,12 +121,20 @@ std::vector<Player*> Game::getPlayers() {
     return this->players;
 }
 
+Player* Game::getWinner() {
+    return this->winner;
+}
+
 void Game::setCurrentPlayer(Player* currentPlayer) {
     this->currentPlayer = currentPlayer;
 }
 
 void Game::setChessBoard(ChessBoard* chessBoard) {
     this->chessBoard = chessBoard;
+}
+
+void Game::setWinner(Player* winner) {
+    this->winner = winner;
 }
 
 void Game::setPlayers(std::vector<Player*> players) {

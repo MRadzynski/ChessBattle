@@ -28,6 +28,8 @@ public:
 
     void onQuitButtonClickHandler();
 
+    void onSurrenderButtonClickHandler();
+
 private:
     CModel *model;
     View *view;

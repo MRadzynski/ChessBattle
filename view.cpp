@@ -149,3 +149,9 @@ void View::on_quitBtn_clicked()
     this->getController()->onQuitButtonClickHandler();
 }
 
+
+void View::on_surrenderBtn_clicked()
+{
+    this->getController()->onSurrenderButtonClickHandler();
+}
+

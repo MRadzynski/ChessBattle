@@ -10,6 +10,7 @@ private:
     std::vector<Player*> players;
     Player* currentPlayer;
     ChessBoard* chessBoard;
+    Player* winner;
 
 public:
     Game();
@@ -17,6 +18,8 @@ public:
     void initGame();
 
     void restartGame();
+
+    void surrender();
 
     void endGame();
 
@@ -32,11 +35,15 @@ public:
 
     std::vector<Player*> getPlayers();
 
+    Player* getWinner();
+
     ChessBoard* getChessBoard();
 
     void setCurrentPlayer(Player* player);
 
     void setPlayers(std::vector<Player*> players);
+
+    void setWinner(Player* winner);
 
     void setChessBoard(ChessBoard* chessboard);
 };

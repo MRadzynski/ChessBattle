@@ -40,6 +40,8 @@ private slots:
 
     void on_quitBtn_clicked();
 
+    void on_surrenderBtn_clicked();
+
 private:
     Ui::View *ui;
     CController* controller;

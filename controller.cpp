@@ -47,5 +47,39 @@ void CController::onNewButtonClickHandler() {
 }
 
 void CController::onQuitButtonClickHandler() {
+    std::vector<std::vector<ChessPiece*>> chessBoard = this->getModel()->getGame()->getChessBoard()->getChessBoardState();
+
+    for(int row = 0; row < 8; row++) {
+        for(int col = 0; col < 8; col++) {
+            if(chessBoard[row][col] != nullptr) {
+                delete chessBoard[row][col];
+            }
+        }
+    }
+
+    //TODO: Cleanup memory before exit the app
+
+    // for(int playerIndex = 0; playerIndex < 2; playerIndex++) {
+    //     delete this->getModel()->getGame()->getPlayers()[playerIndex];
+    // }
+
+    // delete this->getModel()->getGame()->getChessBoard();
+    // delete this->getModel()->getGame();
+    // delete this->getModel();
+    // delete this->getView();
+
     QCoreApplication::exit(0);
+}
+
+void CController::onSurrenderButtonClickHandler() {
+    this->getModel()->getGame()->surrender();
+
+    if(this->getModel()->getGame()->getWinner()->getColor() == PieceColor::BLACK) {
+        qDebug() << "BLACK is the winner!";
+    } else {
+        qDebug() << "WHITE is the winner!";
+    }
+
+    this->getView()->unhighlightSelectedPiece();
+    //this->getModel()->getGame()->restartGame();
 }
