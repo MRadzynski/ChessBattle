@@ -1,5 +1,7 @@
 #include "controller.h"
 
+#include <QCoreApplication>
+
 CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {};
 
 CController::~CController() {};
@@ -37,9 +39,13 @@ void CController::onCellClicked(int row, int col) {
     }
 }
 
-void CController::onNewButtonHandler() {
+void CController::onNewButtonClickHandler() {
     this->getModel()->getGame()->restartGame();
 
     this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
     this->getView()->unhighlightSelectedPiece();
+}
+
+void CController::onQuitButtonClickHandler() {
+    QCoreApplication::exit(0);
 }

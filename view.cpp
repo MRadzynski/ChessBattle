@@ -140,6 +140,12 @@ void View::unhighlightSelectedPiece() {
 
 void View::on_newGameBtn_clicked()
 {
-    this->getController()->onNewButtonHandler();
+    this->getController()->onNewButtonClickHandler();
+}
+
+
+void View::on_quitBtn_clicked()
+{
+    this->getController()->onQuitButtonClickHandler();
 }
 

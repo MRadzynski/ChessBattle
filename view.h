@@ -38,6 +38,8 @@ private slots:
 
     void on_newGameBtn_clicked();
 
+    void on_quitBtn_clicked();
+
 private:
     Ui::View *ui;
     CController* controller;

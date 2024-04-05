@@ -24,7 +24,9 @@ public:
 
     void onCellClicked(int row, int col);
 
-    void onNewButtonHandler();
+    void onNewButtonClickHandler();
+
+    void onQuitButtonClickHandler();
 
 private:
     CModel *model;
