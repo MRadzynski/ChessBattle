@@ -18,6 +18,8 @@ private:
 public:
     ChessPiece(PieceColor _color, int _posX, int _posY, QString iconPath, std::string name);
 
+    virtual ~ChessPiece();
+
     PieceColor getColor();
 
     int getPosX();

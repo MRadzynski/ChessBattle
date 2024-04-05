@@ -36,3 +36,10 @@ void CController::onCellClicked(int row, int col) {
         this->getView()->unhighlightSelectedPiece();
     }
 }
+
+void CController::onNewButtonHandler() {
+    this->getModel()->getGame()->restartGame();
+
+    this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+    this->getView()->unhighlightSelectedPiece();
+}

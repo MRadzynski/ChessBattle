@@ -4,13 +4,12 @@
 
 Game::Game() {
     std::vector<Player*> players;
+    ChessBoard* chessBoard = new ChessBoard();
     Player* blackPlayer = new Player(PieceColor::BLACK);
     Player* whitePlayer = new Player(PieceColor::WHITE);
 
     players.push_back(blackPlayer);
     players.push_back(whitePlayer);
-
-    ChessBoard* chessBoard = new ChessBoard();
 
     this->chessBoard = chessBoard;
     this->currentPlayer = whitePlayer;
@@ -22,7 +21,22 @@ void Game::initGame() {
 }
 
 void Game::restartGame() {
+    std::vector<std::vector<ChessPiece*>> chessBoard = this->getChessBoard()->getChessBoardState();
 
+    for(int row = 0; row < 8; row++) {
+        for(int col = 0; col < 8; col++) {
+            if(chessBoard[row][col] != nullptr) {
+                delete chessBoard[row][col];
+                chessBoard[row][col] = nullptr;
+            }
+        }
+    }
+
+    this->getChessBoard()->setSelectedPiece(nullptr);
+    this->getChessBoard()->setChessBoardState(chessBoard);
+    this->getChessBoard()->initializeChessBoard();
+
+    this->setCurrentPlayer(this->players[1]);
 }
 
 void Game::endGame() {

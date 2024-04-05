@@ -58,8 +58,6 @@ void View::updateChessBoard(std::vector<std::vector<ChessPiece*>> chessBoardStat
     if (tableWidget) {
         for(int row = 0; row < 8; ++row) {
             for(int col = 0; col < 8; ++col) {
-                QTableWidgetItem* item = tableWidget -> item(row, col);
-
                 ChessPiece* piece = chessBoardState[row][col];
 
                 if(piece != nullptr) {
@@ -137,5 +135,11 @@ void View::unhighlightSelectedPiece() {
     } else {
         qDebug() << "Table widget not found!";
     }
+}
+
+
+void View::on_newGameBtn_clicked()
+{
+    this->getController()->onNewButtonHandler();
 }
 

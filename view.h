@@ -36,6 +36,8 @@ public:
 private slots:
     void on_chessBoardTable_cellClicked(int row, int column);
 
+    void on_newGameBtn_clicked();
+
 private:
     Ui::View *ui;
     CController* controller;
