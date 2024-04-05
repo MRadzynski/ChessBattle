@@ -4,11 +4,59 @@
 
 King::King(PieceColor color, int posX, int posY, QString iconPath, std::string name): ChessPiece(color, posX, posY, iconPath, name){};
 
-bool King::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor) {
-    if(board[potentialPosX][potentialPosY] != nullptr) {
-        qDebug() << "Piece: "<<board[potentialPosX][potentialPosY]->getName() << " X: "<<potentialPosX<< " Y: "<<potentialPosY;
+std::vector<std::pair<int, int>> King::getPotentialThreatenedPositions(ChessPiece* otherKing) {
+    std::vector<std::pair<int, int>> threatenedPositions;
+
+    for (int row = -1; row <= 1; ++row) {
+        for (int col = -1; col <= 1; ++col) {
+            if (row == 0 && col == 0)
+                continue;
+
+            int posX = otherKing->getPosX() + row;
+            int posY = otherKing->getPosY() + col;
+
+            if (posX >= 0 && posX < 8 && posY >= 0 && posY < 8) {
+                threatenedPositions.push_back({posX, posY});
+            }
+        }
     }
 
+    return threatenedPositions;
+}
+
+std::vector<std::pair<int, int>> King::getRestrictedKingMoves(ChessPiece* king, ChessPiece* otherKing) {
+    std::vector<std::pair<int, int>> invalidMoves;
+    std::vector<std::pair<int, int>> threatenedPositions = this->getPotentialThreatenedPositions(otherKing);
+
+    for (int row = -1; row <= 1; ++row) {
+        for (int col = -1; col <= 1; ++col) {
+            if (row == 0 && col == 0)
+                continue;
+
+            int posX = king->getPosX() + row;
+            int posY = king->getPosY() + col;
+
+            if (posX >= 0 && posX < 8 && posY >= 0 && posY < 8) {
+                bool threatened = false;
+
+                for (const auto& threatenedPosition : threatenedPositions) {
+                    if (posX == threatenedPosition.first && posY == threatenedPosition.second) {
+                        threatened = true;
+                        break;
+                    }
+                }
+
+                if (threatened) {
+                    invalidMoves.push_back({posX, posY});
+                }
+            }
+        }
+    }
+
+    return invalidMoves;
+}
+
+bool King::isValidMove(int potentialPosX, int potentialPosY, const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor) {
     struct movement {
         int x;
         int y;
@@ -35,17 +83,24 @@ bool King::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<
         oppositePlayer = PieceColor::WHITE;
     }
 
-    //TODO: make the expection for the king piece
     for (auto& row : board) {
         for (auto& piece : row) {
-            if(piece == nullptr || piece->getColor() == playerColor || piece == this || piece->getName() == "BKG" || piece->getName() == "WKG") {
+            if(piece == nullptr || piece->getColor() == playerColor || piece == this) {
                 continue;
             } else {
-                for (auto& possibleMove : possibleMoves) {
-                    bool isValidMove = piece->isValidMove(possibleMove.x, possibleMove.y, board, oppositePlayer);
+                if(piece->getName() == "BKG" || piece->getName() == "WKG") {
+                    std::vector<std::pair<int, int>> restrictedKingMoves = this->getRestrictedKingMoves(this, piece);
 
-                    if(isValidMove) {
-                        restrictedMoves.push_back({possibleMove.x, possibleMove.y});
+                    for (auto& restrictedKingMove : restrictedKingMoves) {
+                        restrictedMoves.push_back({restrictedKingMove.first, restrictedKingMove.second});
+                    }
+                } else {
+                    for (auto& possibleMove : possibleMoves) {
+                        bool isValidMove = piece->isValidMove(possibleMove.x, possibleMove.y, board, oppositePlayer);
+
+                        if(isValidMove) {
+                            restrictedMoves.push_back({possibleMove.x, possibleMove.y});
+                        }
                     }
                 }
             }

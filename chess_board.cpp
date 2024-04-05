@@ -27,8 +27,8 @@ void ChessBoard::initializeChessBoard() {
     Bishop* blackFirstBishop = new Bishop(PieceColor::BLACK, 0, 2, ":/images/assets/bishop_black.png", "BBP");
     Bishop* blackSecondBishop = new Bishop(PieceColor::BLACK, 0, 5, ":/images/assets/bishop_black.png", "BBP");
 
-    King* blackKing = new King(PieceColor::BLACK, 0, 3, ":/images/assets/king_black.png", "BKG");
-    Queen* blackQueen = new Queen(PieceColor::BLACK, 0, 4, ":/images/assets/queen_black.png", "BQN");
+    Queen* blackQueen = new Queen(PieceColor::BLACK, 0, 3, ":/images/assets/queen_black.png", "BQN");
+    King* blackKing = new King(PieceColor::BLACK, 0, 4, ":/images/assets/king_black.png", "BKG");
 
     Pawn* blackFirstPawn = new Pawn(PieceColor::BLACK, 1, 0, ":/images/assets/pawn_black.png", "BPN");
     Pawn* blackSecondPawn = new Pawn(PieceColor::BLACK, 1, 1, ":/images/assets/pawn_black.png", "BPN");
@@ -48,8 +48,8 @@ void ChessBoard::initializeChessBoard() {
     Bishop* whiteFirstBishop = new Bishop(PieceColor::WHITE, 7, 2, ":/images/assets/bishop_white.png", "WBP");
     Bishop* whiteSecondBishop = new Bishop(PieceColor::WHITE, 7, 5, ":/images/assets/bishop_white.png", "WBP");
 
-    King* whiteKing = new King(PieceColor::WHITE, 7, 3, ":/images/assets/king_white.png", "WKG");
-    Queen* whiteQueen = new Queen(PieceColor::WHITE, 7, 4, ":/images/assets/queen_white.png", "WQN");
+    Queen* whiteQueen = new Queen(PieceColor::WHITE, 7, 3, ":/images/assets/queen_white.png", "WQN");
+    King* whiteKing = new King(PieceColor::WHITE, 7, 4, ":/images/assets/king_white.png", "WKG");
 
     Pawn* whiteFirstPawn = new Pawn(PieceColor::WHITE, 6, 0, ":/images/assets/pawn_white.png", "WPN");
     Pawn* whiteSecondPawn = new Pawn(PieceColor::WHITE, 6, 1, ":/images/assets/pawn_white.png", "WPN");
@@ -63,8 +63,8 @@ void ChessBoard::initializeChessBoard() {
     initChessBoardState[0][0] = blackFirstRook;
     initChessBoardState[0][1] = blackFirstKnight;
     initChessBoardState[0][2] = blackFirstBishop;
-    initChessBoardState[0][3] = blackKing;
-    initChessBoardState[0][4] = blackQueen;
+    initChessBoardState[0][3] = blackQueen;
+    initChessBoardState[0][4] = blackKing;
     initChessBoardState[0][5] = blackSecondBishop;
     initChessBoardState[0][6] = blackSecondKnight;
     initChessBoardState[0][7] = blackSecondRook;
@@ -88,8 +88,8 @@ void ChessBoard::initializeChessBoard() {
     initChessBoardState[7][0] = whiteFirstRook;
     initChessBoardState[7][1] = whiteFirstKnight;
     initChessBoardState[7][2] = whiteFirstBishop;
-    initChessBoardState[7][3] = whiteKing;
-    initChessBoardState[7][4] = whiteQueen;
+    initChessBoardState[7][3] = whiteQueen;
+    initChessBoardState[7][4] = whiteKing;
     initChessBoardState[7][5] = whiteSecondBishop;
     initChessBoardState[7][6] = whiteSecondKnight;
     initChessBoardState[7][7] = whiteSecondRook;
