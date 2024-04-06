@@ -33,6 +33,8 @@ public:
 
     void unhighlightSelectedPiece();
 
+    void displayWinnerDialog(const QString& winner);
+
 private slots:
     void on_chessBoardTable_cellClicked(int row, int column);
 

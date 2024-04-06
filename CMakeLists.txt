@@ -51,6 +51,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         player.cpp
         chess_board.h
         chess_board.cpp
+        winner_dialog.cpp
+        winner_dialog.h
 
 
     )

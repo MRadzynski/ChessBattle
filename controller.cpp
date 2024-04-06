@@ -74,12 +74,15 @@ void CController::onQuitButtonClickHandler() {
 void CController::onSurrenderButtonClickHandler() {
     this->getModel()->getGame()->surrender();
 
+    this->getView()->unhighlightSelectedPiece();
+
+    QString winnerName;
+
     if(this->getModel()->getGame()->getWinner()->getColor() == PieceColor::BLACK) {
-        qDebug() << "BLACK is the winner!";
+        winnerName = "BLACK";
     } else {
-        qDebug() << "WHITE is the winner!";
+        winnerName = "WHITE";
     }
 
-    this->getView()->unhighlightSelectedPiece();
-    //this->getModel()->getGame()->restartGame();
+    this->getView()->displayWinnerDialog(winnerName);
 }

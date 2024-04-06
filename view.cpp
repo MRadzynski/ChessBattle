@@ -1,6 +1,7 @@
 #include "view.h"
 #include "controller.h"
 #include "./ui_view.h"
+#include "winner_dialog.h"
 
 #include <QMainWindow>
 #include <QWidget>
@@ -18,6 +19,12 @@ View::~View()
     delete ui;
 }
 
+
+void View::displayWinnerDialog(const QString& winner) {
+    WinnerDialog winnerDialog(winner, nullptr);
+
+    winnerDialog.exec();
+}
 
 void View::renderChessBoard() {
     QTableWidget *tableWidget = this->findChild<QTableWidget*>("chessBoardTable");

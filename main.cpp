@@ -9,7 +9,9 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
+    app.setApplicationName("Chess Battle");
+
     View v;
     v.show();
 
@@ -21,5 +23,5 @@ int main(int argc, char *argv[])
 
     controller->setupGame();
 
-    return a.exec();
+    return app.exec();
 }
