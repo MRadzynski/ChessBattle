@@ -8,6 +8,9 @@
 class CController : public QObject {
     Q_OBJECT
 
+private slots:
+    void updatePlayerTimerView(int playerTime, int playerIndex);
+
 public:
     CController(CModel* _model, View* _view, QObject* _parent);
     ~CController();

@@ -40,6 +40,8 @@ void Game::restartGame() {
 
     this->setWinner(nullptr);
     this->setCurrentPlayer(this->players[1]);
+    this->getPlayers()[0]->getTimer()->resetTimer();
+    this->getPlayers()[1]->getTimer()->resetTimer();
 }
 
 void Game::surrender() {
@@ -70,8 +72,12 @@ void Game::promotePawn() {
 void Game::switchPlayer() {
     if(this->currentPlayer->getColor() == PieceColor::WHITE) {
         this->setCurrentPlayer(this->getPlayers()[0]);
+        this->getPlayers()[1]->getTimer()->pauseTimer();
+        this->getPlayers()[0]->getTimer()->startTimer();
     } else {
         this->setCurrentPlayer(this->getPlayers()[1]);
+        this->getPlayers()[0]->getTimer()->pauseTimer();
+        this->getPlayers()[1]->getTimer()->startTimer();
     }
 }
 

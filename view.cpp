@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QDebug>
+#include <QTime>
 
 View::View(QWidget *parent)
     : QMainWindow(parent)
@@ -144,6 +145,29 @@ void View::unhighlightSelectedPiece() {
     }
 }
 
+void View::updatePlayerTimer(int remainingTime, int playerIndex) {
+    QTimeEdit timer;
+
+    int milliseconds = 123456; // Example milliseconds value
+
+    // Convert milliseconds to QTime
+    int hours = remainingTime / (1000 * 60 * 60);
+    remainingTime -= hours * (1000 * 60 * 60);
+    int minutes = remainingTime / (1000 * 60);
+    remainingTime -= minutes * (1000 * 60);
+    int seconds = remainingTime / 1000;
+    remainingTime -= seconds * 1000;
+
+    QTime newTime(hours, minutes, seconds, remainingTime);
+
+    if(playerIndex == 0) {
+        ui->player_1_timer->setTime(newTime);
+    } else {
+        ui->player_2_timer->setTime(newTime);
+    }
+}
+
+
 
 void View::on_newGameBtn_clicked()
 {
@@ -160,5 +184,10 @@ void View::on_quitBtn_clicked()
 void View::on_surrenderBtn_clicked()
 {
     this->getController()->onSurrenderButtonClickHandler();
+}
+
+void View::on_player_1_timer_userTimeChanged(const QTime &time)
+{
+    qDebug() << time.second();
 }
 

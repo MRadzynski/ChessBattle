@@ -2,10 +2,12 @@
 #define PLAYER_H
 
 #include "piece_color.h"
+#include "timer.h"
 
 class Player {
 private:
     PieceColor color;
+    Timer* timer;
 public:
     Player(PieceColor color);
 
@@ -13,7 +15,11 @@ public:
 
     PieceColor getColor();
 
+    Timer* getTimer();
+
     void setColor(PieceColor color);
+
+    void setTimer(Timer* timer);
 };
 
 #endif // PLAYER_H

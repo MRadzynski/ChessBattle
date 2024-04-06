@@ -2,9 +2,21 @@
 
 #include <QCoreApplication>
 
-CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {};
+CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {
+    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int, int)), this, SLOT(updatePlayerTimerView(int, int)));
+    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int, int)), this, SLOT(updatePlayerTimerView(int, int)));
+};
 
 CController::~CController() {};
+
+void CController::updatePlayerTimerView(int playerTime, int playerIndex) {
+    if(playerTime < 0) {
+        this->onSurrenderButtonClickHandler();
+        this->getModel()->getGame()->getPlayers()[playerIndex]->getTimer()->pauseTimer();
+    }
+
+    view->updatePlayerTimer(playerTime, playerIndex);
+}
 
 void CController::setupGame(){
     this->getModel()->getGame()->initGame();
@@ -44,6 +56,10 @@ void CController::onNewButtonClickHandler() {
 
     this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
     this->getView()->unhighlightSelectedPiece();
+
+    int initTimerTime = this->getModel()->getGame()->getPlayers()[0]->getTimer()->getInitTime();
+    this->getView()->updatePlayerTimer(initTimerTime, 0);
+    this->getView()->updatePlayerTimer(initTimerTime, 1);
 }
 
 void CController::onQuitButtonClickHandler() {

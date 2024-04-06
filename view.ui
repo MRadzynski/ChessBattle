@@ -319,10 +319,13 @@ color: rgb(0, 0, 0);</string>
       <property name="showGroupSeparator" stdset="0">
        <bool>false</bool>
       </property>
+      <property name="displayFormat">
+       <string>mm:ss</string>
+      </property>
       <property name="time">
        <time>
-        <hour>5</hour>
-        <minute>0</minute>
+        <hour>0</hour>
+        <minute>5</minute>
         <second>0</second>
        </time>
       </property>
@@ -392,10 +395,30 @@ color: rgb(0, 0, 0);</string>
       <property name="showGroupSeparator" stdset="0">
        <bool>false</bool>
       </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>23</hour>
+        <minute>5</minute>
+        <second>0</second>
+        <year>1999</year>
+        <month>12</month>
+        <day>31</day>
+       </datetime>
+      </property>
+      <property name="minimumTime">
+       <time>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+       </time>
+      </property>
+      <property name="displayFormat">
+       <string>mm:ss</string>
+      </property>
       <property name="time">
        <time>
-        <hour>5</hour>
-        <minute>0</minute>
+        <hour>23</hour>
+        <minute>5</minute>
         <second>0</second>
        </time>
       </property>
