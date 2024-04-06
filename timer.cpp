@@ -2,7 +2,7 @@
 
 #include <QTimer>
 
-Timer::Timer(int _remainingTime, int _playerIndex): remainingTime(_remainingTime), playerIndex(_playerIndex), initTime(_remainingTime), isRunning(false) {
+Timer::Timer(int _remainingTime) : initTime(_remainingTime), isRunning(false), remainingTime(_remainingTime) {
     QTimer* timer = new QTimer();
 
     timer->setInterval(1000);
@@ -11,19 +11,10 @@ Timer::Timer(int _remainingTime, int _playerIndex): remainingTime(_remainingTime
     connect(this->timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 };
 
-void Timer::updateTime() {
-    if(this->getIsRunning()){
-        int remainingTime = this->getRemainingTime() - 1000;
-        this->setRemainingTime(remainingTime);
-
-        emit timeUpdated(this->getRemainingTime(), this->getPlayerIndex());
-    }
-}
-
-void Timer::startTimer() {
-    if (!this->getIsRunning()) {
-        this->setIsRunning(true);
-        this->getTimer()->start();
+void Timer::pauseTimer() {
+    if (this->getIsRunning()) {
+        this->setIsRunning(false);
+        this->getTimer()->stop();
     }
 }
 
@@ -33,39 +24,48 @@ void Timer::resetTimer() {
     this->setRemainingTime(this->initTime);
 }
 
-void Timer::pauseTimer() {
-    if (this->getIsRunning()) {
-        this->setIsRunning(false);
-        this->getTimer()->stop();
+void Timer::startTimer() {
+    if (!this->getIsRunning()) {
+        this->setIsRunning(true);
+        this->getTimer()->start();
     }
 }
 
-int Timer::getRemainingTime() {
-    return this->remainingTime;
-}
+void Timer::updateTime() {
+    if(this->getIsRunning()){
+        int remainingTime = this->getRemainingTime() - 1000;
+        this->setRemainingTime(remainingTime);
 
-bool Timer::getIsRunning() {
-    return this->isRunning;
-}
-
-int Timer::getPlayerIndex() {
-    return this->playerIndex;
+        emit timeUpdated(this->getRemainingTime());
+    }
 }
 
 int Timer::getInitTime() {
     return this->initTime;
 }
 
+bool Timer::getIsRunning() {
+    return this->isRunning;
+}
+
+int Timer::getRemainingTime() {
+    return this->remainingTime;
+}
+
 QTimer* Timer::getTimer(){
     return this->timer;
 };
 
-void Timer::setRemainingTime(int remainingTime) {
-    this->remainingTime = remainingTime;
+void Timer::setInitTime(int initTime) {
+    this->initTime = initTime;
 }
 
 void Timer::setIsRunning(bool isRunning) {
     this->isRunning = isRunning;
+}
+
+void Timer::setRemainingTime(int remainingTime) {
+    this->remainingTime = remainingTime;
 }
 
 void Timer::setTimer(QTimer* timer){

@@ -1,48 +1,45 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 
 class Timer : public QWidget {
     Q_OBJECT
 private:
-    unsigned int remainingTime;
-    bool isRunning;
     int initTime;
-    int playerIndex;
+    bool isRunning;
+    int remainingTime;
     QTimer* timer;
-
-signals:
-    void timeUpdated(int remainingTime, int playerIndex);
 
 private slots:
     void updateTime();
 
-public:
-    Timer(int remainingTime, int playerIndex);
+signals:
+    void timeUpdated(int remainingTime);
 
-    void startTimer();
+public:
+    Timer(int remainingTime);
 
     void pauseTimer();
 
     void resetTimer();
 
-    int getRemainingTime();
-
-    bool getIsRunning();
+    void startTimer();
 
     int getInitTime();
 
-    int getPlayerIndex();
+    bool getIsRunning();
+
+    int getRemainingTime();
 
     QTimer* getTimer();
 
-    void setRemainingTime(int remainingTime);
+    void setInitTime(int initTime);
 
     void setIsRunning(bool isRunning);
 
-    void setInitTime(int initTime);
+    void setRemainingTime(int remainingTime);
 
     void setTimer(QTimer* timer);
 };

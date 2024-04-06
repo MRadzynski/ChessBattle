@@ -145,20 +145,17 @@ void View::unhighlightSelectedPiece() {
     }
 }
 
-void View::updatePlayerTimer(int remainingTime, int playerIndex) {
+void View::updatePlayerTimer(int milliseconds, int playerIndex) {
     QTimeEdit timer;
 
-    int milliseconds = 123456; // Example milliseconds value
+    int hours = milliseconds / (1000 * 60 * 60);
+    milliseconds -= hours * (1000 * 60 * 60);
+    int minutes = milliseconds / (1000 * 60);
+    milliseconds -= minutes * (1000 * 60);
+    int seconds = milliseconds / 1000;
+    milliseconds -= seconds * 1000;
 
-    // Convert milliseconds to QTime
-    int hours = remainingTime / (1000 * 60 * 60);
-    remainingTime -= hours * (1000 * 60 * 60);
-    int minutes = remainingTime / (1000 * 60);
-    remainingTime -= minutes * (1000 * 60);
-    int seconds = remainingTime / 1000;
-    remainingTime -= seconds * 1000;
-
-    QTime newTime(hours, minutes, seconds, remainingTime);
+    QTime newTime(hours, minutes, seconds, milliseconds);
 
     if(playerIndex == 0) {
         ui->player_1_timer->setTime(newTime);
@@ -167,19 +164,15 @@ void View::updatePlayerTimer(int remainingTime, int playerIndex) {
     }
 }
 
-
-
 void View::on_newGameBtn_clicked()
 {
     this->getController()->onNewButtonClickHandler();
 }
 
-
 void View::on_quitBtn_clicked()
 {
     this->getController()->onQuitButtonClickHandler();
 }
-
 
 void View::on_surrenderBtn_clicked()
 {

@@ -265,9 +265,21 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>181</width>
-        <height>61</height>
+        <width>180</width>
+        <height>60</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>180</width>
+        <height>60</height>
+       </size>
       </property>
       <property name="font">
        <font>
@@ -293,9 +305,21 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>420</x>
         <y>0</y>
-        <width>181</width>
-        <height>51</height>
+        <width>180</width>
+        <height>50</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>180</width>
+        <height>50</height>
+       </size>
       </property>
       <property name="font">
        <font>
@@ -303,9 +327,17 @@ color: rgb(0, 0, 0);</string>
         <bold>false</bold>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(242, 242, 242);
+selection-background-color: rgba(255, 255, 255, 0);
+selection-color: rgb(0, 0, 0);
 color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="frame">
+       <bool>false</bool>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -347,9 +379,21 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>181</width>
-        <height>61</height>
+        <width>180</width>
+        <height>60</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>180</width>
+        <height>60</height>
+       </size>
       </property>
       <property name="font">
        <font>
@@ -369,9 +413,21 @@ color: rgb(0, 0, 0);</string>
        <rect>
         <x>420</x>
         <y>10</y>
-        <width>181</width>
-        <height>51</height>
+        <width>180</width>
+        <height>50</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>180</width>
+        <height>50</height>
+       </size>
       </property>
       <property name="font">
        <font>
@@ -379,9 +435,21 @@ color: rgb(0, 0, 0);</string>
         <bold>false</bold>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(242, 242, 242);
+border-color: rgba(255, 255, 255, 0);
+selection-color: rgba(0, 0, 0, 255);
+selection-background-color: rgba(255, 255, 255, 0);
 color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="frame">
+       <bool>false</bool>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -397,7 +465,7 @@ color: rgb(0, 0, 0);</string>
       </property>
       <property name="dateTime">
        <datetime>
-        <hour>23</hour>
+        <hour>0</hour>
         <minute>5</minute>
         <second>0</second>
         <year>1999</year>
@@ -417,7 +485,7 @@ color: rgb(0, 0, 0);</string>
       </property>
       <property name="time">
        <time>
-        <hour>23</hour>
+        <hour>0</hour>
         <minute>5</minute>
         <second>0</second>
        </time>
@@ -787,7 +855,16 @@ color: rgb(0, 0, 0);</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(242, 242, 242);
-border-color: rgb(255, 255, 255);</string>
+border-color: rgba(255, 255, 255,0);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
      </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>

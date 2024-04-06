@@ -3,19 +3,25 @@
 #include <QCoreApplication>
 
 CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {
-    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int, int)), this, SLOT(updatePlayerTimerView(int, int)));
-    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int, int)), this, SLOT(updatePlayerTimerView(int, int)));
+    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int)), this, SLOT(updatePlayerTimerView(int)));
+    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int)), this, SLOT(updatePlayerTimerView(int)));
 };
 
 CController::~CController() {};
 
-void CController::updatePlayerTimerView(int playerTime, int playerIndex) {
+void CController::updatePlayerTimerView(int playerTime) {
+    int playerIndex = 0;
+
+    if(this->getModel()->getGame()->getCurrentPlayer()->getColor() == PieceColor::WHITE) {
+        playerIndex = 1;
+    }
+
     if(playerTime < 0) {
         this->onSurrenderButtonClickHandler();
         this->getModel()->getGame()->getPlayers()[playerIndex]->getTimer()->pauseTimer();
+    } else {
+        view->updatePlayerTimer(playerTime, playerIndex);
     }
-
-    view->updatePlayerTimer(playerTime, playerIndex);
 }
 
 void CController::setupGame(){

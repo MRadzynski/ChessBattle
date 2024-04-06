@@ -1,15 +1,7 @@
 #include "player.h"
 
-Player::Player(PieceColor _color): color(_color) {
-    int playerIndex;
-
-    if(color == PieceColor::BLACK) {
-        playerIndex = 0;
-    } else {
-        playerIndex = 1;
-    }
-
-    Timer* timer = new Timer(5000, playerIndex);
+Player::Player(PieceColor _color) : color(_color) {
+    Timer* timer = new Timer(300000);
     this->timer = timer;
 };
 
