@@ -1,8 +1,6 @@
 #include "pawn.h"
 #include "piece_color.h"
 
-#include <QDebug>
-
 Pawn::Pawn(PieceColor color, int posX, int posY, QString iconPath, std::string name): ChessPiece(color, posX, posY, iconPath, name){
     this->initPosX = posX;
     this->initPosY = posY;

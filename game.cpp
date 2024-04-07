@@ -137,6 +137,10 @@ void Game::makeMove(int row, int col) {
             selectedPiece->setPosY(col);
             newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
 
+            if(newChessBoardState[row][col] != nullptr) {
+                delete newChessBoardState[row][col];
+            }
+
             if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
                 ChessPiece* promotedPiece = this->promotePawn(selectedPiece);
                 newChessBoardState[row][col] = promotedPiece;
