@@ -94,6 +94,20 @@ bool King::isValidMove(int potentialPosX, int potentialPosY, const std::vector<s
                     for (auto& restrictedKingMove : restrictedKingMoves) {
                         restrictedMoves.push_back({restrictedKingMove.first, restrictedKingMove.second});
                     }
+                } else if(piece->getName() == "BPN" || piece->getName() == "WPN") {
+                    for (auto& possibleMove : possibleMoves) {
+                        if(piece->getPosY() == possibleMove.y) continue;
+
+                        if(piece->getName() == "WPN") {
+                            if(piece->getPosX()-1 > -1 && piece->getPosX()-1 == possibleMove.x && (piece->getPosY()-1 > -1 && piece->getPosY()-1 == possibleMove.y || piece->getPosY()+1 < 8 && piece->getPosY()+1 == possibleMove.y)) {
+                                restrictedMoves.push_back({possibleMove.x, possibleMove.y});
+                            }
+                        } else {
+                            if(piece->getPosX()+1 < 8 && piece->getPosX()+1 == possibleMove.x && (piece->getPosY()-1 > -1 && piece->getPosY()-1 == possibleMove.y || piece->getPosY()+1 < 8 && piece->getPosY()+1 == possibleMove.y)) {
+                                restrictedMoves.push_back({possibleMove.x, possibleMove.y});
+                            }
+                        }
+                    }
                 } else {
                     for (auto& possibleMove : possibleMoves) {
                         bool isValidMove = piece->isValidMove(possibleMove.x, possibleMove.y, board, oppositePlayer);
