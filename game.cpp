@@ -1,4 +1,9 @@
 #include "game.h"
+#include "promotion_dialog.h"
+#include "rook.h"
+#include "bishop.h"
+#include "knight.h"
+#include "queen.h"
 
 #include <QDebug>
 
@@ -65,8 +70,37 @@ void Game::playTurn(Player* player) {
     this->setCurrentPlayer(player);
 }
 
-void Game::promotePawn() {
+ChessPiece* Game::promotePawn(ChessPiece* selectedPiece) {
+    QString color = "black";
+    std::string colorLetter = "B";
 
+    if(selectedPiece->getColor() == PieceColor::WHITE){
+        color = "white";
+        colorLetter = "W";
+    }
+
+    PromotionDialog promotionDialog(color, nullptr);
+    if (promotionDialog.exec() == QDialog::Accepted) {
+        QString pieceType = promotionDialog.getSelectedOption();
+
+        ChessPiece* promotedPiece;
+
+        if(pieceType == "rook") {
+            promotedPiece = new Rook(selectedPiece->getColor(), selectedPiece->getPosX(), selectedPiece->getPosY(), ":/images/assets/rook_"+color+".png", colorLetter+"RK");
+        } else if(pieceType == "bishop") {
+            promotedPiece = new Bishop(selectedPiece->getColor(), selectedPiece->getPosX(), selectedPiece->getPosY(), ":/images/assets/bishop_"+color+".png", colorLetter+"BP");
+        } else if(pieceType == "knight") {
+            promotedPiece = new Knight(selectedPiece->getColor(), selectedPiece->getPosX(), selectedPiece->getPosY(), ":/images/assets/knight_"+color+".png", colorLetter+"KT");
+        } else {
+            promotedPiece = new Queen(selectedPiece->getColor(), selectedPiece->getPosX(), selectedPiece->getPosY(), ":/images/assets/queen_"+color+".png", colorLetter+"QN");
+        }
+
+        delete selectedPiece;
+
+        return promotedPiece;
+    }
+
+    return selectedPiece;
 }
 
 void Game::switchPlayer() {
@@ -102,7 +136,13 @@ void Game::makeMove(int row, int col) {
             selectedPiece->setPosX(row);
             selectedPiece->setPosY(col);
             newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
-            newChessBoardState[row][col] = selectedPiece;
+
+            if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
+                ChessPiece* promotedPiece = this->promotePawn(selectedPiece);
+                newChessBoardState[row][col] = promotedPiece;
+            } else {
+                newChessBoardState[row][col] = selectedPiece;
+            }
 
             this->getChessBoard()->setChessBoardState(newChessBoardState);
             this->getChessBoard()->setSelectedPiece(nullptr);

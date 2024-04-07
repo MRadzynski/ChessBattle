@@ -3,6 +3,7 @@
 
 #include "player.h"
 #include "chess_board.h"
+
 #include <vector>
 
 class Game {
@@ -25,7 +26,7 @@ public:
 
     void playTurn(Player* player);
 
-    void promotePawn();
+    ChessPiece* promotePawn(ChessPiece* selectedPiece);
 
     void switchPlayer();
 

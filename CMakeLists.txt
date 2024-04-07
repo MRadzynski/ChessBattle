@@ -53,6 +53,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         chess_board.cpp
         winner_dialog.cpp
         winner_dialog.h
+        promotion_dialog.h
+        promotion_dialog.cpp
 
 
     )

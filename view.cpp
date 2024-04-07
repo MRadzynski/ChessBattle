@@ -178,9 +178,3 @@ void View::on_surrenderBtn_clicked()
 {
     this->getController()->onSurrenderButtonClickHandler();
 }
-
-void View::on_player_1_timer_userTimeChanged(const QTime &time)
-{
-    qDebug() << time.second();
-}
-

@@ -133,27 +133,27 @@ void ChessBoard::setChessBoardState(std::vector<std::vector<ChessPiece*>> chessB
 }
 
 void ChessBoard::displayChessBoardState() {
-    // for (auto& row : this->getChessBoardState()) {
-    //     for (auto& piece : row) {
-    //         if(piece == nullptr) {
-    //             std::cout << "---" << " ";
-    //         } else {
-    //             std::cout << piece->getName() << " ";
-    //         }
-    //     }
-    //     std::cout<<std::endl;
-    // }
-
     for (auto& row : this->getChessBoardState()) {
         for (auto& piece : row) {
             if(piece == nullptr) {
                 std::cout << "---" << " ";
             } else {
-                std::cout << piece->getPosX() << "," << piece->getPosY()<< " ";
+                std::cout << piece->getName() << " ";
             }
         }
         std::cout<<std::endl;
     }
+
+    // for (auto& row : this->getChessBoardState()) {
+    //     for (auto& piece : row) {
+    //         if(piece == nullptr) {
+    //             std::cout << "---" << " ";
+    //         } else {
+    //             std::cout << piece->getPosX() << "," << piece->getPosY()<< " ";
+    //         }
+    //     }
+    //     std::cout<<std::endl;
+    // }
 }
 
 ChessPiece* ChessBoard::getSelectedPiece() {
