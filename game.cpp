@@ -30,7 +30,7 @@ void Game::endGame() {
 
 }
 
-QString getChessBoardCoords(int posX, int posY) {
+QString Game::getChessBoardCoords(int posX, int posY) {
     int finalXCoord = 8 - posX;
     QString finalCoords;
 
@@ -137,8 +137,8 @@ void Game::makeMove(int row, int col) {
 
             HistoryLog* historyMove = new HistoryLog();
             historyMove->pieceIcon = selectedPiece->getIconPath();
-            historyMove->posBefore = getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
-            historyMove->posAfter = getChessBoardCoords(row, col);
+            historyMove->posBefore = this->getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
+            historyMove->posAfter = this->getChessBoardCoords(row, col);
 
             if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
                 ChessPiece* promotedPiece = this->promotePawn(selectedPiece);

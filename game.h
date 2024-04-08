@@ -15,6 +15,8 @@ private:
     std::vector<Player*> players;
     Player* winner;
 
+    QString getChessBoardCoords(int posX, int posY);
+
 public:
     Game();
 

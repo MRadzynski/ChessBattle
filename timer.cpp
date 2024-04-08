@@ -1,7 +1,5 @@
 #include "timer.h"
 
-#include <QTimer>
-
 Timer::Timer(int _remainingTime) : initTime(_remainingTime), isRunning(false), remainingTime(_remainingTime) {
     QTimer* timer = new QTimer();
 
