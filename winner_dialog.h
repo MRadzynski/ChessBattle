@@ -13,5 +13,4 @@ public:
     WinnerDialog(const QString& winnerName, QWidget *parent);
 };
 
-
 #endif // WINNER_DIALOG_H

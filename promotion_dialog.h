@@ -5,8 +5,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QVBoxLayout>
 #include <QVariant>
+#include <QVBoxLayout>
 
 class PromotionDialog : public QDialog {
     Q_OBJECT

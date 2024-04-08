@@ -1,19 +1,24 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <QObject>
 #include "model.h"
 #include "view.h"
 
+#include <QObject>
+
 class CController : public QObject {
     Q_OBJECT
+private:
+    CModel *model;
+    View *view;
 
 private slots:
-    void updatePlayerTimerView(int playerTime, bool setBothTimers);
     void updateMovesHistoryView(HistoryLog* lastMove);
+    void updatePlayerTimerView(int playerTime, bool setBothTimers);
 
 public:
     CController(CModel* _model, View* _view, QObject* _parent);
+    
     ~CController();
 
     void setupGame();
@@ -32,13 +37,9 @@ public:
 
     void onQuitButtonClickHandler();
 
-    void onSurrenderButtonClickHandler();
-
     void onSettingsButtonClickHandler();
 
-private:
-    CModel *model;
-    View *view;
+    void onSurrenderButtonClickHandler();
 };
 
 #endif // CONTROLLER_H

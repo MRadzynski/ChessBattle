@@ -1,60 +1,60 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "player.h"
 #include "chess_board.h"
 #include "moves_history.h"
+#include "player.h"
 
 #include <vector>
 
 class Game {
 private:
-    std::vector<Player*> players;
-    Player* currentPlayer;
     ChessBoard* chessBoard;
-    Player* winner;
+    Player* currentPlayer;
     MovesHistory* movesHistory;
+    std::vector<Player*> players;
+    Player* winner;
 
 public:
     Game();
 
+    void endGame();
+
     void initGame();
 
-    void restartGame();
+    ChessPiece* isCheck(ChessPiece* king);
 
-    void surrender();
-
-    void endGame();
+    void makeMove(int row, int col);
 
     void playTurn(Player* player);
 
     ChessPiece* promotePawn(ChessPiece* selectedPiece);
 
-    ChessPiece* isCheck(ChessPiece* king);
+    void restartGame();
+
+    void surrender();
 
     void switchPlayer();
 
-    void makeMove(int row, int col);
+    ChessBoard* getChessBoard();
 
     Player* getCurrentPlayer();
+
+    MovesHistory* getMovesHistory();
 
     std::vector<Player*> getPlayers();
 
     Player* getWinner();
 
-    ChessBoard* getChessBoard();
-
-    MovesHistory* getMovesHistory();
+    void setChessBoard(ChessBoard* chessboard);
 
     void setCurrentPlayer(Player* player);
+
+    void setMovesHistory(MovesHistory* movesHistory);
 
     void setPlayers(std::vector<Player*> players);
 
     void setWinner(Player* winner);
-
-    void setChessBoard(ChessBoard* chessboard);
-
-    void setMovesHistory(MovesHistory* movesHistory);
 };
 
 #endif // GAME_H

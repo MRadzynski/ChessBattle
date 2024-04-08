@@ -1,11 +1,11 @@
 #include "chess_board.h"
 #include "chess_piece.h"
-#include "rook.h"
-#include "knight.h"
 #include "bishop.h"
 #include "king.h"
-#include "queen.h"
+#include "knight.h"
 #include "pawn.h"
+#include "queen.h"
+#include "rook.h"
 
 #include <iostream>
 

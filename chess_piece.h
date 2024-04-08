@@ -2,43 +2,43 @@
 #define CHESS_PIECE_H
 
 #include "piece_color.h"
-#include <vector>
-#include <string>
 
 #include <QString>
+#include <string>
+#include <vector>
 
 class ChessPiece {
 private:
     PieceColor color;
-    int posX;
-    int posY;
     QString iconPath;
     std::string name;
+    int posX;
+    int posY;
 
 public:
-    ChessPiece(PieceColor _color, int _posX, int _posY, QString iconPath, std::string name);
+    ChessPiece(PieceColor _color, int _posX, int _posY, QString _iconPath, std::string _name);
 
     virtual ~ChessPiece();
 
     PieceColor getColor();
 
-    int getPosX();
-
-    int getPosY();
-
     QString getIconPath();
 
     std::string getName();
 
+    int getPosX();
+
+    int getPosY();
+
     void setColor(PieceColor color);
-
-    void setPosX(int posX);
-
-    void setPosY(int posX);
 
     void setIconPath(QString iconPath);
 
     void setName(std::string name);
+
+    void setPosX(int posX);
+
+    void setPosY(int posX);
 
     virtual bool isValidMove(int potentialPosX, int potentialPosY, const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor) = 0;
 };

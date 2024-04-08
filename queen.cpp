@@ -1,6 +1,6 @@
 #include "queen.h"
 
-Queen::Queen(PieceColor color, int posX, int posY, QString iconPath, std::string name): ChessPiece(color, posX, posY, iconPath, name){};
+Queen::Queen(PieceColor color, int posX, int posY, QString iconPath, std::string name) : ChessPiece(color, posX, posY, iconPath, name) {};
 
 bool Queen::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor) {
     struct movement {
@@ -111,5 +111,4 @@ bool Queen::isValidMove(int potentialPosX, int potentialPosY,  const std::vector
     }
 
     return false;
-
 }

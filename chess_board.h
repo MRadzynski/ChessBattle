@@ -2,6 +2,7 @@
 #define CHESS_BOARD_H
 
 #include "chess_piece.h"
+
 #include <vector>
 
 class ChessBoard {
@@ -12,19 +13,19 @@ private:
 public:
     ChessBoard();
 
+    void displayChessBoardState();
+
     void initializeChessBoard();
 
-    void movePiece(int row, int col);
-
     bool isCheckMate();
+
+    void movePiece(int row, int col);
 
     std::vector<std::vector<ChessPiece*>> getChessBoardState();
 
     ChessPiece* getSelectedPiece();
 
     void setChessBoardState(std::vector<std::vector<ChessPiece*>> chessBoardState);
-
-    void displayChessBoardState();
 
     void setSelectedPiece(ChessPiece* selectedPiece);
 };

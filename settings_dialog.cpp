@@ -1,7 +1,7 @@
 #include "settings_dialog.h"
 
-#include <QFormLayout>
 #include <QDialogButtonBox>
+#include <QFormLayout>
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     setWindowTitle("Game settings");
@@ -28,12 +28,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     connect(buttonBox, &QDialogButtonBox::rejected, this, &SettingsDialog::reject);
 }
 
-QString SettingsDialog::getPlayerWhiteName() {
-    return this->playerNameWhiteLineEdit->text();
-}
-
 QString SettingsDialog::getPlayerBlackName() {
     return this->playerNameBlackLineEdit->text();
+}
+
+QString SettingsDialog::getPlayerWhiteName() {
+    return this->playerNameWhiteLineEdit->text();
 }
 
 int SettingsDialog::getTimerDuration() {

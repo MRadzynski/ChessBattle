@@ -1,6 +1,6 @@
-#include "view.h"
 #include "controller.h"
 #include "model.h"
+#include "view.h"
 
 #include <QApplication>
 

@@ -4,26 +4,26 @@
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QVariant>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QSpinBox>
+#include <QVariant>
+#include <QVBoxLayout>
 
 class SettingsDialog : public QDialog {
     Q_OBJECT
 
 private:
-    QLineEdit* playerNameWhiteLineEdit;
     QLineEdit* playerNameBlackLineEdit;
+    QLineEdit* playerNameWhiteLineEdit;
     QSpinBox* timerSpinBox;
 
 public:
     SettingsDialog(QWidget* parent);
 
-    QString getPlayerWhiteName();
-
     QString getPlayerBlackName();
+
+    QString getPlayerWhiteName();
 
     int getTimerDuration();
 };

@@ -11,6 +11,12 @@ CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr
 
 CController::~CController() {};
 
+void CController::setupGame(){
+    this->getModel()->getGame()->initGame();
+    this->getView()->renderChessBoard();
+    this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+}
+
 void CController::updateMovesHistoryView(HistoryLog* lastMove) {
     if(lastMove == nullptr) {
         this->getView()->clearMovesHistory();
@@ -38,12 +44,6 @@ void CController::updatePlayerTimerView(int playerTime, bool setBothTimers) {
             this->getView()->updatePlayerTimer(playerTime, playerIndex);
         }
     }
-}
-
-void CController::setupGame(){
-    this->getModel()->getGame()->initGame();
-    this->getView()->renderChessBoard();
-    this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
 }
 
 CModel* CController::getModel(){
@@ -109,22 +109,6 @@ void CController::onQuitButtonClickHandler() {
     QCoreApplication::exit(0);
 }
 
-void CController::onSurrenderButtonClickHandler() {
-    this->getModel()->getGame()->surrender();
-
-    this->getView()->unhighlightSelectedPiece();
-
-    QString winnerName;
-
-    if(this->getModel()->getGame()->getWinner()->getColor() == PieceColor::BLACK) {
-        winnerName = "BLACK";
-    } else {
-        winnerName = "WHITE";
-    }
-
-    this->getView()->displayWinnerDialog(winnerName);
-}
-
 void CController::onSettingsButtonClickHandler() {
     if(this->getModel()->getGame()->getPlayers()[0]->getTimer()->getIsRunning() || this->getModel()->getGame()->getPlayers()[1]->getTimer()->getIsRunning()) {
         QMessageBox::information(nullptr, "Information", "You can't modify the settings if the game is still in progress.");
@@ -155,4 +139,20 @@ void CController::onSettingsButtonClickHandler() {
     if(playerBlackName != "" || playerWhiteName != "") {
         this->getView()->updatePlayersNames(playerBlackName, playerWhiteName);
     }
+}
+
+void CController::onSurrenderButtonClickHandler() {
+    this->getModel()->getGame()->surrender();
+
+    this->getView()->unhighlightSelectedPiece();
+
+    QString winnerName;
+
+    if(this->getModel()->getGame()->getWinner()->getColor() == PieceColor::BLACK) {
+        winnerName = "BLACK";
+    } else {
+        winnerName = "WHITE";
+    }
+
+    this->getView()->displayWinnerDialog(winnerName);
 }

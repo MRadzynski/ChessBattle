@@ -7,6 +7,7 @@ class Pawn : public ChessPiece {
 private:
     int initPosX;
     int initPosY;
+    
 public:
     Pawn(PieceColor color, int posX, int posY, QString iconPath, std::string name);
 
@@ -20,6 +21,5 @@ public:
 
     void setInitPosY(int initPosY);
 };
-
 
 #endif // PAWN_H

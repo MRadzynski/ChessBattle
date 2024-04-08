@@ -9,10 +9,9 @@ private:
     PieceColor color;
     QString name;
     Timer* timer;
-public:
-    Player(PieceColor color, QString name);
 
-    void makeMove(int posX, int PosY);
+public:
+    Player(PieceColor _color, QString _name);
 
     PieceColor getColor();
 

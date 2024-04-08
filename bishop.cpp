@@ -1,6 +1,6 @@
 #include "bishop.h"
 
-Bishop::Bishop(PieceColor color, int posX, int posY, QString iconPath, std::string name): ChessPiece(color, posX, posY, iconPath, name){};
+Bishop::Bishop(PieceColor color, int posX, int posY, QString iconPath, std::string name): ChessPiece(color, posX, posY, iconPath, name) {};
 
 bool Bishop::isValidMove(int potentialPosX, int potentialPosY,  const std::vector<std::vector<ChessPiece*>>& board, PieceColor playerColor) {
     struct movement {

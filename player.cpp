@@ -5,10 +5,6 @@ Player::Player(PieceColor _color, QString _name) : color(_color), name(_name) {
     this->timer = timer;
 };
 
-void Player::makeMove(int posX, int posY) {
-
-}
-
 PieceColor Player::getColor() {
     return this->color;
 }
