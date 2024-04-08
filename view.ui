@@ -272,7 +272,7 @@ color: rgb(0, 0, 0);</string>
        <height>60</height>
       </rect>
      </property>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="blackPlayerNameField">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -375,7 +375,7 @@ color: rgb(0, 0, 0);</string>
       </property>
      </widget>
      <zorder>player_1_timer</zorder>
-     <zorder>label_4</zorder>
+     <zorder>blackPlayerNameField</zorder>
     </widget>
     <widget class="QWidget" name="widget_5" native="true">
      <property name="geometry">
@@ -469,7 +469,7 @@ color: rgb(0, 0, 0);</string>
        </time>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="whitePlayerNameField">
       <property name="geometry">
        <rect>
         <x>20</x>

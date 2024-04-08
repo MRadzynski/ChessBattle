@@ -11,8 +11,8 @@
 Game::Game() {
     std::vector<Player*> players;
     ChessBoard* chessBoard = new ChessBoard();
-    Player* blackPlayer = new Player(PieceColor::BLACK);
-    Player* whitePlayer = new Player(PieceColor::WHITE);
+    Player* blackPlayer = new Player(PieceColor::BLACK, QString("Player 1"));
+    Player* whitePlayer = new Player(PieceColor::WHITE, QString("Player 2"));
     Player* winner = nullptr;
     MovesHistory* movesHistory = new MovesHistory();
 
@@ -222,17 +222,17 @@ void Game::makeMove(int row, int col) {
                 delete newChessBoardState[row][col];
             }
 
+            HistoryLog* historyMove = new HistoryLog();
+            historyMove->pieceIcon = selectedPiece->getIconPath();
+            historyMove->posBefore = getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
+            historyMove->posAfter = getChessBoardCoords(row, col);
+
             if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
                 ChessPiece* promotedPiece = this->promotePawn(selectedPiece);
                 newChessBoardState[row][col] = promotedPiece;
             } else {
                 newChessBoardState[row][col] = selectedPiece;
             }
-
-            HistoryLog* historyMove = new HistoryLog();
-            historyMove->pieceIcon = selectedPiece->getIconPath();
-            historyMove->posBefore = getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
-            historyMove->posAfter = getChessBoardCoords(row, col);
 
             this->getMovesHistory()->addNewLog(historyMove);
             this->getChessBoard()->setChessBoardState(newChessBoardState);

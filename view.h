@@ -35,9 +35,13 @@ public:
 
     void displayWinnerDialog(const QString& winner);
 
+    std::tuple<QString, QString, int> displaySettingsDialog();
+
     void updatePlayerTimer(int remainingTime, int playerIndex);
 
     void updateMovesHistoryList(QString icon, QString text);
+
+    void updatePlayersNames(QString blackPlayerName, QString whitePlayerName);
 
     void clearMovesHistory();
 
@@ -49,6 +53,8 @@ private slots:
     void on_quitBtn_clicked();
 
     void on_surrenderBtn_clicked();
+
+    void on_settingsBtn_clicked();
 
 private:
     Ui::View *ui;

@@ -36,7 +36,7 @@ void Timer::updateTime() {
         int remainingTime = this->getRemainingTime() - 1000;
         this->setRemainingTime(remainingTime);
 
-        emit timeUpdated(this->getRemainingTime());
+        emit timeUpdated(this->getRemainingTime(), false);
     }
 }
 
@@ -58,6 +58,8 @@ QTimer* Timer::getTimer(){
 
 void Timer::setInitTime(int initTime) {
     this->initTime = initTime;
+
+    emit timeUpdated(this->getInitTime(), true);
 }
 
 void Timer::setIsRunning(bool isRunning) {

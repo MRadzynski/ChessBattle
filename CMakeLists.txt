@@ -57,6 +57,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         promotion_dialog.cpp
         moves_history.h
         moves_history.cpp
+        settings_dialog.h
+        settings_dialog.cpp
 
 
     )

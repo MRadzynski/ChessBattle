@@ -7,17 +7,22 @@
 class Player {
 private:
     PieceColor color;
+    QString name;
     Timer* timer;
 public:
-    Player(PieceColor color);
+    Player(PieceColor color, QString name);
 
     void makeMove(int posX, int PosY);
 
     PieceColor getColor();
 
+    QString getName();
+
     Timer* getTimer();
 
     void setColor(PieceColor color);
+
+    void setName(QString name);
 
     void setTimer(Timer* timer);
 };

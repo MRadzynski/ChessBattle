@@ -2,6 +2,7 @@
 #include "controller.h"
 #include "./ui_view.h"
 #include "winner_dialog.h"
+#include "settings_dialog.h"
 
 #include <QMainWindow>
 #include <QWidget>
@@ -25,6 +26,33 @@ void View::displayWinnerDialog(const QString& winner) {
     WinnerDialog winnerDialog(winner, nullptr);
 
     winnerDialog.exec();
+}
+
+std::tuple<QString, QString, int>  View::displaySettingsDialog() {
+    SettingsDialog settingsDialog(nullptr);
+    QString playerBlackName;
+    QString playerWhiteName;
+    int timerDuration;
+
+    if (settingsDialog.exec() == QDialog::Accepted) {
+        QString playerBlackName = settingsDialog.getPlayerBlackName();
+        QString playerWhiteName = settingsDialog.getPlayerWhiteName();
+        int timerDuration = settingsDialog.getTimerDuration();
+
+        return std::make_tuple(playerBlackName, playerWhiteName, timerDuration);
+    } else {
+        return std::make_tuple("", "", -1);
+    }
+}
+
+void View::updatePlayersNames(QString blackPlayerName, QString whitePlayerName) {
+    if(blackPlayerName != "") {
+        ui->blackPlayerNameField->setText(blackPlayerName);
+    }
+
+    if(whitePlayerName != "") {
+        ui->whitePlayerNameField->setText(whitePlayerName);
+    }
 }
 
 void View::renderChessBoard() {
@@ -211,3 +239,9 @@ void View::on_surrenderBtn_clicked()
 {
     this->getController()->onSurrenderButtonClickHandler();
 }
+
+void View::on_settingsBtn_clicked()
+{
+    this->getController()->onSettingsButtonClickHandler();
+}
+

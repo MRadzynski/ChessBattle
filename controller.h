@@ -9,7 +9,7 @@ class CController : public QObject {
     Q_OBJECT
 
 private slots:
-    void updatePlayerTimerView(int playerTime);
+    void updatePlayerTimerView(int playerTime, bool setBothTimers);
     void updateMovesHistoryView(HistoryLog* lastMove);
 
 public:
@@ -33,6 +33,8 @@ public:
     void onQuitButtonClickHandler();
 
     void onSurrenderButtonClickHandler();
+
+    void onSettingsButtonClickHandler();
 
 private:
     CModel *model;

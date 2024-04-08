@@ -16,7 +16,7 @@ private slots:
     void updateTime();
 
 signals:
-    void timeUpdated(int remainingTime);
+    void timeUpdated(int remainingTime, bool setBothTimers);
 
 public:
     Timer(int remainingTime);

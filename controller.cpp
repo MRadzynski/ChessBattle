@@ -1,10 +1,11 @@
 #include "controller.h"
 
 #include <QCoreApplication>
+#include <QMessageBox>
 
 CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {
-    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int)), this, SLOT(updatePlayerTimerView(int)));
-    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int)), this, SLOT(updatePlayerTimerView(int)));
+    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int, bool)), this, SLOT(updatePlayerTimerView(int, bool)));
+    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int, bool)), this, SLOT(updatePlayerTimerView(int, bool)));
     connect(this->getModel()->getGame()->getMovesHistory(), SIGNAL(historyUpdated(HistoryLog*)), this, SLOT(updateMovesHistoryView(HistoryLog*)));
 };
 
@@ -19,18 +20,23 @@ void CController::updateMovesHistoryView(HistoryLog* lastMove) {
     }
 }
 
-void CController::updatePlayerTimerView(int playerTime) {
-    int playerIndex = 0;
-
-    if(this->getModel()->getGame()->getCurrentPlayer()->getColor() == PieceColor::WHITE) {
-        playerIndex = 1;
-    }
-
-    if(playerTime < 0) {
-        this->onSurrenderButtonClickHandler();
-        this->getModel()->getGame()->getPlayers()[playerIndex]->getTimer()->pauseTimer();
+void CController::updatePlayerTimerView(int playerTime, bool setBothTimers) {
+    if(setBothTimers) {
+        this->getView()->updatePlayerTimer(playerTime, 0);
+        this->getView()->updatePlayerTimer(playerTime, 1);
     } else {
-        view->updatePlayerTimer(playerTime, playerIndex);
+        int playerIndex = 0;
+
+        if(this->getModel()->getGame()->getCurrentPlayer()->getColor() == PieceColor::WHITE) {
+            playerIndex = 1;
+        }
+
+        if(playerTime < 0) {
+            this->onSurrenderButtonClickHandler();
+            this->getModel()->getGame()->getPlayers()[playerIndex]->getTimer()->pauseTimer();
+        } else {
+            this->getView()->updatePlayerTimer(playerTime, playerIndex);
+        }
     }
 }
 
@@ -117,4 +123,36 @@ void CController::onSurrenderButtonClickHandler() {
     }
 
     this->getView()->displayWinnerDialog(winnerName);
+}
+
+void CController::onSettingsButtonClickHandler() {
+    if(this->getModel()->getGame()->getPlayers()[0]->getTimer()->getIsRunning() || this->getModel()->getGame()->getPlayers()[1]->getTimer()->getIsRunning()) {
+        QMessageBox::information(nullptr, "Information", "You can't modify the settings if the game is still in progress.");
+        return;
+    }
+
+    std::tuple<QString, QString, int> gameSettings = this->getView()->displaySettingsDialog();
+
+    QString playerBlackName = std::get<0>(gameSettings);
+    QString playerWhiteName = std::get<1>(gameSettings);
+    int timerDuration = std::get<2>(gameSettings);
+
+    if(playerBlackName != "") {
+        this->getModel()->getGame()->getPlayers()[0]->setName(playerBlackName);
+    }
+
+    if(playerWhiteName != "") {
+        this->getModel()->getGame()->getPlayers()[1]->setName(playerWhiteName);
+    }
+
+    if(timerDuration != -1) {
+        this->getModel()->getGame()->getPlayers()[0]->getTimer()->setInitTime(timerDuration * 60 * 1000);
+        this->getModel()->getGame()->getPlayers()[0]->getTimer()->resetTimer();
+        this->getModel()->getGame()->getPlayers()[1]->getTimer()->setInitTime(timerDuration * 60 * 1000);
+        this->getModel()->getGame()->getPlayers()[1]->getTimer()->resetTimer();
+    }
+
+    if(playerBlackName != "" || playerWhiteName != "") {
+        this->getView()->updatePlayersNames(playerBlackName, playerWhiteName);
+    }
 }

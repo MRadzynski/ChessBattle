@@ -2,7 +2,6 @@
 #include "controller.h"
 #include "model.h"
 
-#include "promotion_dialog.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -20,9 +19,6 @@ int main(int argc, char *argv[])
     v.setController(controller);
 
     controller->setupGame();
-
-    // PromotionDialog dialog("white", nullptr);
-    // dialog.exec();
 
     return app.exec();
 }
