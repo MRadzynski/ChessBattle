@@ -10,6 +10,7 @@ class CController : public QObject {
 
 private slots:
     void updatePlayerTimerView(int playerTime);
+    void updateMovesHistoryView(HistoryLog* lastMove);
 
 public:
     CController(CModel* _model, View* _view, QObject* _parent);

@@ -37,6 +37,10 @@ public:
 
     void updatePlayerTimer(int remainingTime, int playerIndex);
 
+    void updateMovesHistoryList(QString icon, QString text);
+
+    void clearMovesHistory();
+
 private slots:
     void on_chessBoardTable_cellClicked(int row, int column);
 
@@ -45,8 +49,6 @@ private slots:
     void on_quitBtn_clicked();
 
     void on_surrenderBtn_clicked();
-
-    void on_player_1_timer_userTimeChanged(const QTime &time);
 
 private:
     Ui::View *ui;

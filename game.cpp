@@ -5,6 +5,7 @@
 #include "knight.h"
 #include "queen.h"
 
+#include <string>
 #include <QDebug>
 
 Game::Game() {
@@ -13,6 +14,7 @@ Game::Game() {
     Player* blackPlayer = new Player(PieceColor::BLACK);
     Player* whitePlayer = new Player(PieceColor::WHITE);
     Player* winner = nullptr;
+    MovesHistory* movesHistory = new MovesHistory();
 
     players.push_back(blackPlayer);
     players.push_back(whitePlayer);
@@ -21,6 +23,7 @@ Game::Game() {
     this->currentPlayer = whitePlayer;
     this->players = players;
     this->winner = winner;
+    this->movesHistory = movesHistory;
 }
 
 void Game::initGame() {
@@ -47,19 +50,22 @@ void Game::restartGame() {
     this->setCurrentPlayer(this->players[1]);
     this->getPlayers()[0]->getTimer()->resetTimer();
     this->getPlayers()[1]->getTimer()->resetTimer();
+    this->getMovesHistory()->clearHistoryLogs();
 }
 
 void Game::surrender() {
     Player* winner;
 
     if(this->currentPlayer->getColor() == PieceColor::BLACK) {
-        winner = this->players[1];
+        winner = this->getPlayers()[1];
     } else {
-        winner = this->players[0];
+        winner = this->getPlayers()[0];
     }
 
     this->getChessBoard()->setSelectedPiece(nullptr);
     this->setWinner(winner);
+    this->getPlayers()[0]->getTimer()->pauseTimer();
+    this->getPlayers()[1]->getTimer()->pauseTimer();
 }
 
 void Game::endGame() {
@@ -68,6 +74,45 @@ void Game::endGame() {
 
 void Game::playTurn(Player* player) {
     this->setCurrentPlayer(player);
+}
+
+ChessPiece* Game::isCheck(ChessPiece* king) {
+    std::vector<std::vector<ChessPiece*>> board = this->getChessBoard()->getChessBoardState();
+    std::string oppositeColor = "B";
+    PieceColor oppositePieceColor = PieceColor::BLACK;
+
+    if(king->getColor() == PieceColor::BLACK) {
+        oppositeColor = "W";
+        oppositePieceColor = PieceColor::WHITE;
+    }
+
+    for (auto& row : board) {
+        for (auto& piece : row) {
+            if(piece == nullptr || piece->getColor() == king->getColor() || piece == king || piece->getName() == oppositeColor+"KG") {
+                continue;
+            } else {
+                if(piece->getName() == oppositeColor+"PN") {
+                    if(oppositeColor == "W") {
+                        if(piece->getPosX()-1 > -1 && piece->getPosX()-1 == king->getPosX() && (piece->getPosY()-1 > -1 && piece->getPosY()-1 == king->getPosY() || piece->getPosY()+1 < 8 && piece->getPosY()+1 == king->getPosY())) {
+                            return piece;
+                        }
+                    } else {
+                        if(piece->getPosX()+1 < 8 && piece->getPosX()+1 == king->getPosX() && (piece->getPosY()-1 > -1 && piece->getPosY()-1 == king->getPosY() || piece->getPosY()+1 < 8 && piece->getPosY()+1 == king->getPosY())) {
+                            return piece;
+                        }
+                    }
+                } else {
+                    bool isValidMove = piece->isValidMove(king->getPosX(), king->getPosY(), board, oppositePieceColor);
+
+                    if(isValidMove) {
+                        return piece;
+                    }
+                }
+            }
+        }
+    }
+
+    return nullptr;
 }
 
 ChessPiece* Game::promotePawn(ChessPiece* selectedPiece) {
@@ -115,6 +160,42 @@ void Game::switchPlayer() {
     }
 }
 
+QString getChessBoardCoords(int posX, int posY) {
+    int finalXCoord = 8 - posX;
+    QString finalCoords;
+
+    switch(posY) {
+        case 0:
+            finalCoords += "A";
+            break;
+        case 1:
+            finalCoords += "B";
+            break;
+        case 2:
+            finalCoords += "C";
+            break;
+        case 3:
+            finalCoords += "D";
+            break;
+        case 4:
+            finalCoords += "E";
+            break;
+        case 5:
+            finalCoords += "F";
+            break;
+        case 6:
+            finalCoords += "G";
+            break;
+        case 7:
+            finalCoords += "H";
+            break;
+    }
+
+    finalCoords += QString::number(finalXCoord);
+
+    return finalCoords;
+}
+
 void Game::makeMove(int row, int col) {
     if(this->getWinner() != nullptr) return;
 
@@ -148,6 +229,12 @@ void Game::makeMove(int row, int col) {
                 newChessBoardState[row][col] = selectedPiece;
             }
 
+            HistoryLog* historyMove = new HistoryLog();
+            historyMove->pieceIcon = selectedPiece->getIconPath();
+            historyMove->posBefore = getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
+            historyMove->posAfter = getChessBoardCoords(row, col);
+
+            this->getMovesHistory()->addNewLog(historyMove);
             this->getChessBoard()->setChessBoardState(newChessBoardState);
             this->getChessBoard()->setSelectedPiece(nullptr);
             this->switchPlayer();
@@ -156,7 +243,7 @@ void Game::makeMove(int row, int col) {
         }
     }
 
-    this->getChessBoard()->displayChessBoardState();
+    // this->getChessBoard()->displayChessBoardState();
 }
 
 Player* Game::getCurrentPlayer() {
@@ -175,6 +262,10 @@ Player* Game::getWinner() {
     return this->winner;
 }
 
+MovesHistory* Game::getMovesHistory() {
+    return this->movesHistory;
+}
+
 void Game::setCurrentPlayer(Player* currentPlayer) {
     this->currentPlayer = currentPlayer;
 }
@@ -189,5 +280,9 @@ void Game::setWinner(Player* winner) {
 
 void Game::setPlayers(std::vector<Player*> players) {
     this->players = players;
+}
+
+void Game::setMovesHistory(MovesHistory* movesHistory) {
+    this->movesHistory = movesHistory;
 }
 

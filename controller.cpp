@@ -5,9 +5,19 @@
 CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {
     connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int)), this, SLOT(updatePlayerTimerView(int)));
     connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int)), this, SLOT(updatePlayerTimerView(int)));
+    connect(this->getModel()->getGame()->getMovesHistory(), SIGNAL(historyUpdated(HistoryLog*)), this, SLOT(updateMovesHistoryView(HistoryLog*)));
 };
 
 CController::~CController() {};
+
+void CController::updateMovesHistoryView(HistoryLog* lastMove) {
+    if(lastMove == nullptr) {
+        this->getView()->clearMovesHistory();
+    } else {
+        QString text = lastMove->posBefore + " -> " + lastMove->posAfter;
+        this->getView()->updateMovesHistoryList(lastMove->pieceIcon, text);
+    }
+}
 
 void CController::updatePlayerTimerView(int playerTime) {
     int playerIndex = 0;

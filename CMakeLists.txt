@@ -55,6 +55,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         winner_dialog.h
         promotion_dialog.h
         promotion_dialog.cpp
+        moves_history.h
+        moves_history.cpp
 
 
     )

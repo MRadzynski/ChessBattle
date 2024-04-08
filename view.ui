@@ -234,14 +234,20 @@ color: rgb(0, 0, 0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QListWidget" name="moves_history_container">
+    <widget class="QListWidget" name="movesHistoryContainer">
      <property name="geometry">
       <rect>
        <x>24</x>
        <y>70</y>
-       <width>171</width>
+       <width>170</width>
        <height>650</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
      </property>
     </widget>
    </widget>
@@ -442,7 +448,7 @@ color: rgb(0, 0, 0);</string>
         <second>0</second>
         <year>1999</year>
         <month>12</month>
-        <day>30</day>
+        <day>29</day>
        </datetime>
       </property>
       <property name="minimumTime">

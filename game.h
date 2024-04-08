@@ -3,6 +3,7 @@
 
 #include "player.h"
 #include "chess_board.h"
+#include "moves_history.h"
 
 #include <vector>
 
@@ -12,6 +13,7 @@ private:
     Player* currentPlayer;
     ChessBoard* chessBoard;
     Player* winner;
+    MovesHistory* movesHistory;
 
 public:
     Game();
@@ -28,6 +30,8 @@ public:
 
     ChessPiece* promotePawn(ChessPiece* selectedPiece);
 
+    ChessPiece* isCheck(ChessPiece* king);
+
     void switchPlayer();
 
     void makeMove(int row, int col);
@@ -40,6 +44,8 @@ public:
 
     ChessBoard* getChessBoard();
 
+    MovesHistory* getMovesHistory();
+
     void setCurrentPlayer(Player* player);
 
     void setPlayers(std::vector<Player*> players);
@@ -47,6 +53,8 @@ public:
     void setWinner(Player* winner);
 
     void setChessBoard(ChessBoard* chessboard);
+
+    void setMovesHistory(MovesHistory* movesHistory);
 };
 
 #endif // GAME_H

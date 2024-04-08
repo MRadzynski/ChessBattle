@@ -164,6 +164,39 @@ void View::updatePlayerTimer(int milliseconds, int playerIndex) {
     }
 }
 
+void View::clearMovesHistory() {
+    QListWidget* listWidget = ui->movesHistoryContainer;
+    listWidget->clear();
+}
+
+void View::updateMovesHistoryList(QString iconPath, QString text) {
+    QListWidget* listWidget = ui->movesHistoryContainer;
+
+    QLabel* iconLabel = new QLabel;
+    QLabel* textLabel = new QLabel(text);
+    QPixmap pixmap(iconPath);
+
+    iconLabel->setPixmap(pixmap.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    QHBoxLayout* layout = new QHBoxLayout;
+    layout->addWidget(iconLabel);
+    layout->addWidget(textLabel);
+    layout->setContentsMargins(5, 5, 5, 5);
+
+    QWidget* widget = new QWidget;
+    widget->setFixedSize(150, 60);
+    widget->setLayout(layout);
+    widget->setStyleSheet("background-color: #8b5a2b; color: #f2f2f2;");
+
+    QListWidgetItem* listItem = new QListWidgetItem;
+    listItem->setSizeHint(QSize(150, 70));
+
+    listWidget->insertItem(0, listItem);
+    listWidget->setItemWidget(listItem, widget);
+    listWidget->setSelectionMode(QAbstractItemView::NoSelection);
+    listWidget->setFocusPolicy(Qt::NoFocus);
+}
+
 void View::on_newGameBtn_clicked()
 {
     this->getController()->onNewButtonClickHandler();
