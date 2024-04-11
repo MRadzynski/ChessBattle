@@ -146,13 +146,7 @@ void CController::onSurrenderButtonClickHandler() {
 
     this->getView()->unhighlightSelectedPiece();
 
-    QString winnerName;
-
-    if(this->getModel()->getGame()->getWinner()->getColor() == PieceColor::BLACK) {
-        winnerName = "BLACK";
-    } else {
-        winnerName = "WHITE";
-    }
+    QString winnerName = this->getModel()->getGame()->getWinner()->getName();
 
     this->getView()->displayWinnerDialog(winnerName);
 }
