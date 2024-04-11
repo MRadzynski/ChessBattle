@@ -6,6 +6,7 @@ Controller::Controller(Model* _model, View* _view, QObject* _parent = nullptr) :
     connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int,bool)), this, SLOT(updatePlayerTimerView(int,bool)));
     connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int,bool)), this, SLOT(updatePlayerTimerView(int,bool)));
     connect(this->getModel()->getGame()->getMovesHistory(), SIGNAL(historyUpdated(HistoryLog*)), this, SLOT(updateMovesHistoryView(HistoryLog*)));
+    connect(this->getModel()->getGame(), SIGNAL(gameEnded()), this, SLOT(displayWinnerDialog()));
 };
 
 Controller::~Controller() {};
@@ -14,6 +15,12 @@ void Controller::setupGame(){
     this->getModel()->getGame()->initGame();
     this->getView()->getChessboardView()->renderChessBoard();
     this->getView()->getChessboardView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+}
+
+void Controller::displayWinnerDialog() {
+    QString winnerName = this->getModel()->getGame()->getWinner()->getName();
+    
+    this->getView()->getDialogsView()->displayWinnerDialog(winnerName);
 }
 
 void Controller::updateMovesHistoryView(HistoryLog* lastMove) {
@@ -93,17 +100,6 @@ void Controller::onQuitButtonClickHandler() {
             }
         }
     }
-
-    //TODO: Cleanup memory before exit the app
-
-    // for(int playerIndex = 0; playerIndex < 2; playerIndex++) {
-    //     delete this->getModel()->getGame()->getPlayers()[playerIndex];
-    // }
-
-    // delete this->getModel()->getGame()->getChessBoard();
-    // delete this->getModel()->getGame();
-    // delete this->getModel();
-    // delete this->getView();
 
     QCoreApplication::exit(0);
 }

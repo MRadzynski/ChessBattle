@@ -5,19 +5,27 @@
 #include "moves_history.h"
 #include "player.h"
 
+#include <QObject>
 #include <vector>
 
 /**
  * @class Game
  * @brief This class represents a chess game. It contains the chess board, the players, the current player, the moves history and the winner. It also contains the methods to play the game.
  */
-class Game {
+class Game : public QObject {
+    Q_OBJECT
+
 private:
     ChessBoard* chessBoard; ///< The chess board.
     Player* currentPlayer; ///< The current player.
     MovesHistory* movesHistory; ///< The moves history.
     std::vector<Player*> players; ///< The players.
     Player* winner; ///< The winner.
+
+    /**
+     * @brief Ends the game.
+     */
+    void endGame();
 
     /**
      * @brief Translates the numeric coords to the chess moves naming standard.
@@ -51,11 +59,6 @@ public:
      * @brief Constructs a new Game object.
      */
     Game();
-
-    /**
-     * @brief Ends the game.
-     */
-    void endGame();
 
     /**
      * @brief Initializes the game.
@@ -144,6 +147,12 @@ public:
      * @param winner The winner.
      */
     void setWinner(Player* winner);
+
+signals:
+    /**
+     * @brief Signal emitted when the game has ended.
+     */
+    void gameEnded();
 };
 
 #endif // GAME_H

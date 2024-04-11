@@ -27,7 +27,13 @@ Game::Game() {
 }
 
 void Game::endGame() {
+    this->setWinner(this->getCurrentPlayer());
+    this->getPlayers()[0]->getTimer()->pauseTimer();
+    this->getPlayers()[1]->getTimer()->pauseTimer();
 
+    this->getChessBoard()->setSelectedPiece(nullptr);
+
+    emit gameEnded();
 }
 
 QString Game::getChessBoardCoords(int posX, int posY) {
@@ -132,6 +138,10 @@ void Game::makeMove(int row, int col) {
             newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
 
             if(newChessBoardState[row][col] != nullptr) {
+                if(newChessBoardState[row][col]->getName() == "BKG" || newChessBoardState[row][col]->getName() == "WKG") {
+                    this->endGame();
+                    return;
+                }
                 delete newChessBoardState[row][col];
             }
 
@@ -151,12 +161,8 @@ void Game::makeMove(int row, int col) {
             this->getChessBoard()->setChessBoardState(newChessBoardState);
             this->getChessBoard()->setSelectedPiece(nullptr);
             this->switchPlayer();
-        } else {
-            this->getChessBoard()->setSelectedPiece(nullptr);
         }
     }
-
-    // this->getChessBoard()->displayChessBoardState();
 }
 
 void Game::playTurn(Player* player) {
@@ -211,7 +217,6 @@ void Game::restartGame() {
     this->getChessBoard()->setSelectedPiece(nullptr);
     this->getChessBoard()->setChessBoardState(chessBoard);
     this->getChessBoard()->initializeChessBoard();
-
     this->setWinner(nullptr);
     this->setCurrentPlayer(this->players[1]);
     this->getPlayers()[0]->getTimer()->resetTimer();
@@ -285,4 +290,3 @@ void Game::setPlayers(std::vector<Player*> players) {
 void Game::setWinner(Player* winner) {
     this->winner = winner;
 }
-

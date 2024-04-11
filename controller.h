@@ -15,6 +15,12 @@ private:
     View *view; ///< The pointer to the view instance.
 
 private slots:
+
+    /**
+     * @brief Displays the winner dialog.
+     */
+     void displayWinnerDialog();
+
     /**
      * @brief Updates the moves history view.
      * @param lastMove The last move.

@@ -1,7 +1,6 @@
 #ifndef CHESSBOARD_VIEW_H
 #define CHESSBOARD_VIEW_H
 
-#include "chessboard_view.h"
 #include "chess_piece.h"
 #include "ui_view.h"
 
