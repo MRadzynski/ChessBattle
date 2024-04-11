@@ -1,7 +1,5 @@
 #include "chess_piece.h"
 
-#include <QDebug>
-
 ChessPiece::ChessPiece(PieceColor _color, int _posX, int _posY, QString _iconPath, std::string _name) : color(_color), posX(_posX), posY(_posY), iconPath(_iconPath), name(_name) {};
 
 ChessPiece::~ChessPiece() {};

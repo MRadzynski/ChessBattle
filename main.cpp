@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
     View v;
     v.show();
 
-    CModel* model = new CModel();
+    Model* model = new Model();
 
-    CController* controller = new CController(model, &v, nullptr);
+    Controller* controller = new Controller(model, &v, nullptr);
 
     v.setController(controller);
 

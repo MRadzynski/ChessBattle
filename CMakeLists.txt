@@ -59,6 +59,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         moves_history.cpp
         settings_dialog.h
         settings_dialog.cpp
+        moves_history_view.h
+        moves_history_view.cpp
+        player_view.h
+        player_view.cpp
+        chessboard_view.h
+        chessboard_view.cpp
+        dialogs_view.h
+        dialogs_view.cpp
 
 
     )

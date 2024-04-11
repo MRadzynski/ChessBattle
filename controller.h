@@ -4,16 +4,14 @@
 #include "model.h"
 #include "view.h"
 
-#include <QObject>
-
 /**
- * @class CController
+ * @class Controller
  * @brief This class represents the controller in the MVC pattern.
  */
-class CController : public QObject {
+class Controller : public QObject {
     Q_OBJECT
 private:
-    CModel *model; ///< The pointer to the model instance.
+    Model *model; ///< The pointer to the model instance.
     View *view; ///< The pointer to the view instance.
 
 private slots:
@@ -32,17 +30,17 @@ private slots:
 
 public:
     /**
-     * @brief Constructs a new CController object. It connects the signals and slots.
+     * @brief Constructs a new Controller object. It connects the signals and slots.
      * @param _model The model.
      * @param _view The view.
      * @param _parent The parent QObject.
      */
-    CController(CModel* _model, View* _view, QObject* _parent);
+    Controller(Model* _model, View* _view, QObject* _parent);
     
     /**
-     * @brief Destroys the CController object.
+     * @brief Destroys the Controller object.
      */
-    ~CController();
+    ~Controller();
 
     /**
      * @brief Sets up the game.
@@ -53,7 +51,7 @@ public:
      * @brief Gets the mode; instance.
      * @return The model instance.
      */
-    CModel* getModel();
+    Model* getModel();
 
     /**
      * @brief Gets the view instance.
@@ -65,7 +63,7 @@ public:
      * @brief Sets the model instance.
      * @param model The model instance to set.
      */
-    void setModel(CModel* model);
+    void setModel(Model* model);
 
     /**
      * @brief Sets the view instance.

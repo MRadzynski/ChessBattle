@@ -1,16 +1,13 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QAbstractListModel>
-#include <QStringList>
-
 #include "game.h"
 
 /**
  * @class CModel
  * @brief This class represents the model in the MVC architecture. It is responsible for managing the data in the application.
  */
-class CModel {
+class Model {
 private:
     Game* game; ///< Pointer to the Game object.
 
@@ -18,7 +15,7 @@ public:
     /**
      * @brief Constructs a new CModel object.
      */
-    CModel();
+    Model();
 
     /**
      * @brief Gets the Game object.

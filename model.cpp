@@ -1,14 +1,14 @@
 #include "model.h"
 
-CModel::CModel() {
+Model::Model() {
     Game* game = new Game();
     this->game = game;
 }
 
-Game* CModel::getGame() {
+Game* Model::getGame() {
     return this->game;
 }
 
-void CModel::setGame(Game* game) {
+void Model::setGame(Game* game) {
     this->game = game;
 }

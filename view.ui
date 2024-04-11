@@ -312,7 +312,7 @@ color: rgb(0, 0, 0);</string>
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
-     <widget class="QTimeEdit" name="player_1_timer">
+     <widget class="QTimeEdit" name="blackPlayerTimer">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -374,7 +374,7 @@ color: rgb(0, 0, 0);</string>
        </time>
       </property>
      </widget>
-     <zorder>player_1_timer</zorder>
+     <zorder>blackPlayerTimer</zorder>
      <zorder>blackPlayerNameField</zorder>
     </widget>
     <widget class="QWidget" name="widget_5" native="true">
@@ -386,7 +386,7 @@ color: rgb(0, 0, 0);</string>
        <height>60</height>
       </rect>
      </property>
-     <widget class="QTimeEdit" name="player_2_timer">
+     <widget class="QTimeEdit" name="whitePlayerTimer">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -448,7 +448,7 @@ color: rgb(0, 0, 0);</string>
         <second>0</second>
         <year>1999</year>
         <month>12</month>
-        <day>29</day>
+        <day>27</day>
        </datetime>
       </property>
       <property name="minimumTime">

@@ -1,35 +1,34 @@
 #include "controller.h"
 
-#include <QCoreApplication>
 #include <QMessageBox>
 
-CController::CController(CModel* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {
-    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int, bool)), this, SLOT(updatePlayerTimerView(int, bool)));
-    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int, bool)), this, SLOT(updatePlayerTimerView(int, bool)));
+Controller::Controller(Model* _model, View* _view, QObject* _parent = nullptr) : model(_model), view(_view) {
+    connect(this->getModel()->getGame()->getPlayers()[0]->getTimer(), SIGNAL(timeUpdated(int,bool)), this, SLOT(updatePlayerTimerView(int,bool)));
+    connect(this->getModel()->getGame()->getPlayers()[1]->getTimer(), SIGNAL(timeUpdated(int,bool)), this, SLOT(updatePlayerTimerView(int,bool)));
     connect(this->getModel()->getGame()->getMovesHistory(), SIGNAL(historyUpdated(HistoryLog*)), this, SLOT(updateMovesHistoryView(HistoryLog*)));
 };
 
-CController::~CController() {};
+Controller::~Controller() {};
 
-void CController::setupGame(){
+void Controller::setupGame(){
     this->getModel()->getGame()->initGame();
-    this->getView()->renderChessBoard();
-    this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+    this->getView()->getChessboardView()->renderChessBoard();
+    this->getView()->getChessboardView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
 }
 
-void CController::updateMovesHistoryView(HistoryLog* lastMove) {
+void Controller::updateMovesHistoryView(HistoryLog* lastMove) {
     if(lastMove == nullptr) {
-        this->getView()->clearMovesHistory();
+        this->getView()->getMovesHistoryView()->clearMovesHistory();
     } else {
         QString text = lastMove->posBefore + " -> " + lastMove->posAfter;
-        this->getView()->updateMovesHistoryList(lastMove->pieceIcon, text);
+        this->getView()->getMovesHistoryView()->updateMovesHistoryList(lastMove->pieceIcon, text);
     }
 }
 
-void CController::updatePlayerTimerView(int playerTime, bool setBothTimers) {
+void Controller::updatePlayerTimerView(int playerTime, bool setBothTimers) {
     if(setBothTimers) {
-        this->getView()->updatePlayerTimer(playerTime, 0);
-        this->getView()->updatePlayerTimer(playerTime, 1);
+        this->getView()->getPlayerView()->updatePlayerTimer(playerTime, 0);
+        this->getView()->getPlayerView()->updatePlayerTimer(playerTime, 1);
     } else {
         int playerIndex = 0;
 
@@ -41,50 +40,50 @@ void CController::updatePlayerTimerView(int playerTime, bool setBothTimers) {
             this->onSurrenderButtonClickHandler();
             this->getModel()->getGame()->getPlayers()[playerIndex]->getTimer()->pauseTimer();
         } else {
-            this->getView()->updatePlayerTimer(playerTime, playerIndex);
+            this->getView()->getPlayerView()->updatePlayerTimer(playerTime, playerIndex);
         }
     }
 }
 
-CModel* CController::getModel(){
+Model* Controller::getModel(){
     return this->model;
 }
 
-View* CController::getView() {
+View* Controller::getView() {
     return this->view;
 }
 
-void CController::setModel(CModel* model) {
+void Controller::setModel(Model* model) {
     this->model = model;
 }
 
-void CController::setView(View* view) {
+void Controller::setView(View* view) {
     this->view = view;
 }
 
-void CController::onCellClicked(int row, int col) {
+void Controller::onCellClicked(int row, int col) {
     this->getModel()->getGame()->makeMove(row, col);
-    this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+    this->getView()->getChessboardView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
 
     if(this->getModel()->getGame()->getChessBoard()->getSelectedPiece() != nullptr) {
-        this->getView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece(), this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+        this->getView()->getChessboardView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece(), this->getModel()->getGame()->getChessBoard()->getChessBoardState());
     } else {
-        this->getView()->unhighlightSelectedPiece();
+        this->getView()->getChessboardView()->unhighlightSelectedPiece();
     }
 }
 
-void CController::onNewButtonClickHandler() {
+void Controller::onNewButtonClickHandler() {
     this->getModel()->getGame()->restartGame();
 
-    this->getView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
-    this->getView()->unhighlightSelectedPiece();
+    this->getView()->getChessboardView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+    this->getView()->getChessboardView()->unhighlightSelectedPiece();
 
     int initTimerTime = this->getModel()->getGame()->getPlayers()[0]->getTimer()->getInitTime();
-    this->getView()->updatePlayerTimer(initTimerTime, 0);
-    this->getView()->updatePlayerTimer(initTimerTime, 1);
+    this->getView()->getPlayerView()->updatePlayerTimer(initTimerTime, 0);
+    this->getView()->getPlayerView()->updatePlayerTimer(initTimerTime, 1);
 }
 
-void CController::onQuitButtonClickHandler() {
+void Controller::onQuitButtonClickHandler() {
     std::vector<std::vector<ChessPiece*>> chessBoard = this->getModel()->getGame()->getChessBoard()->getChessBoardState();
 
     for(int row = 0; row < 8; row++) {
@@ -109,13 +108,13 @@ void CController::onQuitButtonClickHandler() {
     QCoreApplication::exit(0);
 }
 
-void CController::onSettingsButtonClickHandler() {
+void Controller::onSettingsButtonClickHandler() {
     if(this->getModel()->getGame()->getPlayers()[0]->getTimer()->getIsRunning() || this->getModel()->getGame()->getPlayers()[1]->getTimer()->getIsRunning()) {
         QMessageBox::information(nullptr, "Information", "You can't modify the settings if the game is still in progress.");
         return;
     }
 
-    std::tuple<QString, QString, int> gameSettings = this->getView()->displaySettingsDialog();
+    std::tuple<QString, QString, int> gameSettings = this->getView()->getDialogsView()->displaySettingsDialog();
 
     QString playerBlackName = std::get<0>(gameSettings);
     QString playerWhiteName = std::get<1>(gameSettings);
@@ -137,16 +136,21 @@ void CController::onSettingsButtonClickHandler() {
     }
 
     if(playerBlackName != "" || playerWhiteName != "") {
-        this->getView()->updatePlayersNames(playerBlackName, playerWhiteName);
+        this->getView()->getPlayerView()->updatePlayersNames(playerBlackName, playerWhiteName);
     }
 }
 
-void CController::onSurrenderButtonClickHandler() {
+void Controller::onSurrenderButtonClickHandler() {
+    if(!this->getModel()->getGame()->getPlayers()[0]->getTimer()->getIsRunning() && !this->getModel()->getGame()->getPlayers()[1]->getTimer()->getIsRunning()) {
+        QMessageBox::information(nullptr, "Information", "You can't surrender before the game is started");
+        return;
+    }
+
     this->getModel()->getGame()->surrender();
 
-    this->getView()->unhighlightSelectedPiece();
+    this->getView()->getChessboardView()->unhighlightSelectedPiece();
 
     QString winnerName = this->getModel()->getGame()->getWinner()->getName();
 
-    this->getView()->displayWinnerDialog(winnerName);
+    this->getView()->getDialogsView()->displayWinnerDialog(winnerName);
 }

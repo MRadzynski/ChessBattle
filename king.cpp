@@ -1,7 +1,5 @@
 #include "king.h"
 
-#include <QDebug>
-
 King::King(PieceColor color, int posX, int posY, QString iconPath, std::string name) : ChessPiece(color, posX, posY, iconPath, name) {};
 
 std::vector<std::pair<int, int>> King::getPotentialThreatenedPositions(ChessPiece* otherKing) {

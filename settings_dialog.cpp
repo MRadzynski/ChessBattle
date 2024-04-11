@@ -15,7 +15,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     layout->addRow("Player White Name:", playerNameWhiteLineEdit);
 
     timerSpinBox = new QSpinBox(this);
-    timerSpinBox->setRange(1, 60);
+    timerSpinBox->setRange(1, 59);
     timerSpinBox->setValue(5);
     timerSpinBox->setSuffix(" minutes");
 

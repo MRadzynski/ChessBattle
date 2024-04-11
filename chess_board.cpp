@@ -7,7 +7,7 @@
 #include "queen.h"
 #include "rook.h"
 
-#include <iostream>
+#include <QDebug>
 
 ChessBoard::ChessBoard() {
     std::vector<std::vector<ChessPiece*>> initChessBoardState(8, std::vector<ChessPiece*>(8, nullptr));
@@ -128,38 +128,36 @@ std::vector<std::vector<ChessPiece*>> ChessBoard::getChessBoardState() {
     return this->chessBoardState;
 }
 
+ChessPiece* ChessBoard::getSelectedPiece() {
+    return this->selectedPiece;
+}
+
 void ChessBoard::setChessBoardState(std::vector<std::vector<ChessPiece*>> chessBoardState) {
     this->chessBoardState = chessBoardState;
+}
+
+void ChessBoard::setSelectedPiece(ChessPiece* selectedPiece) {
+    this->selectedPiece = selectedPiece;
 }
 
 void ChessBoard::displayChessBoardState() {
     for (auto& row : this->getChessBoardState()) {
         for (auto& piece : row) {
             if(piece == nullptr) {
-                std::cout << "---" << " ";
+                qDebug() << "--- ";
             } else {
-                std::cout << piece->getName() << " ";
+                qDebug() << piece->getName() << " ";
             }
         }
-        std::cout<<std::endl;
     }
 
     // for (auto& row : this->getChessBoardState()) {
     //     for (auto& piece : row) {
     //         if(piece == nullptr) {
-    //             std::cout << "---" << " ";
+    //             qDebug() << "--- ";
     //         } else {
-    //             std::cout << piece->getPosX() << "," << piece->getPosY()<< " ";
+    //             qDebug() << piece->getPosX() << "," << piece->getPosY()<< " ";
     //         }
     //     }
-    //     std::cout<<std::endl;
     // }
-}
-
-ChessPiece* ChessBoard::getSelectedPiece() {
-    return this->selectedPiece;
-}
-
-void ChessBoard::setSelectedPiece(ChessPiece* selectedPiece) {
-    this->selectedPiece = selectedPiece;
 }
