@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "game.h"
 
 #include <QMessageBox>
 
@@ -72,10 +73,32 @@ void Controller::onCellClicked(int row, int col) {
     this->getModel()->getGame()->makeMove(row, col);
     this->getView()->getChessboardView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
 
-    if(this->getModel()->getGame()->getChessBoard()->getSelectedPiece() != nullptr) {
-        this->getView()->getChessboardView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece(), this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+    ChessPiece* kingPiece = nullptr;
+
+    for(auto& row : this->getModel()->getGame()->getChessBoard()->getChessBoardState()) {
+        for(auto& piece : row) {
+            if(piece != nullptr && piece->getColor() == this->getModel()->getGame()->getCurrentPlayer()->getColor() && piece->getName().find("KG") != std::string::npos) {
+                kingPiece = piece;
+                break;
+            }
+        }
+    }
+
+    if(this->getModel()->getGame()->isCheck(kingPiece)) {
+
+        std::vector<Game::Movement> validMoves = this->getModel()->getGame()->isCheckmate(kingPiece);
+
+        if(this->getModel()->getGame()->getChessBoard()->getSelectedPiece() != nullptr) {
+            this->getView()->getChessboardView()->highlightSelectedPieceInCheck(this->getModel()->getGame()->getChessBoard()->getSelectedPiece(), this->getModel()->getGame()->getChessBoard()->getChessBoardState(), validMoves);
+        } else {
+            this->getView()->getChessboardView()->unhighlightSelectedPiece();
+        }
     } else {
-        this->getView()->getChessboardView()->unhighlightSelectedPiece();
+        if(this->getModel()->getGame()->getChessBoard()->getSelectedPiece() != nullptr) {
+            this->getView()->getChessboardView()->highlightSelectedPiece(this->getModel()->getGame()->getChessBoard()->getSelectedPiece(), this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+        } else {
+            this->getView()->getChessboardView()->unhighlightSelectedPiece();
+        }
     }
 }
 

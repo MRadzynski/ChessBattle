@@ -2,6 +2,42 @@
 
 ChessboardView::ChessboardView(Ui::View* _ui) : ui(_ui) {};
 
+void ChessboardView::highlightSelectedPieceInCheck(ChessPiece* selectedPiece, std::vector<std::vector<ChessPiece*>> chessBoard, std::vector<Game::Movement> validMoves) {
+    QTableWidget *tableWidget = this->getUI()->chessBoardTable;
+
+    if(tableWidget) {
+        for(int row = 0; row < 8; ++row) {
+            for(int col = 0; col < 8; ++col) {
+                QTableWidgetItem* item = tableWidget -> item(row, col);
+
+                bool isValidMove = selectedPiece->isValidMove(row, col, chessBoard, selectedPiece->getColor());
+
+                if(isValidMove) {
+                    bool isInValidMoves = false;
+
+                    for(auto validMove : validMoves) {
+                        if(validMove.x == row && validMove.y == col) {
+                            isInValidMoves = true;
+                        }
+                    }
+
+                    if(isInValidMoves) {
+                        item->setBackground(QColor(244, 67, 54));
+                    }
+                }
+            }
+        }
+
+        int row = selectedPiece->getPosX();
+        int col = selectedPiece->getPosY();
+
+        QTableWidgetItem* item = tableWidget -> item(row, col);
+        item->setBackground(QColor(76, 175, 115));
+    } else {
+        qDebug() << "Table widget not found!";
+    }
+}
+
 void ChessboardView::highlightSelectedPiece(ChessPiece* selectedPiece, std::vector<std::vector<ChessPiece*>> chessBoard) {
     QTableWidget *tableWidget = this->getUI()->chessBoardTable;
 
