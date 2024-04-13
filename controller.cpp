@@ -10,12 +10,16 @@ Controller::Controller(Model* _model, View* _view, QObject* _parent = nullptr) :
     connect(this->getModel()->getGame(), SIGNAL(gameEnded()), this, SLOT(displayWinnerDialog()));
 };
 
-Controller::~Controller() {};
+Controller::~Controller() {
+    delete this->model;
+    delete this->view;
+};
 
 void Controller::setupGame(){
     this->getModel()->getGame()->initGame();
     this->getView()->getChessboardView()->renderChessBoard();
     this->getView()->getChessboardView()->updateChessBoard(this->getModel()->getGame()->getChessBoard()->getChessBoardState());
+    this->onSettingsButtonClickHandler();
 }
 
 void Controller::displayWinnerDialog() {

@@ -9,6 +9,10 @@ Timer::Timer(int _remainingTime) : initTime(_remainingTime), isRunning(false), r
     connect(this->timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 };
 
+Timer::~Timer() {
+    delete this->timer;
+}
+
 void Timer::pauseTimer() {
     if (this->getIsRunning()) {
         this->setIsRunning(false);

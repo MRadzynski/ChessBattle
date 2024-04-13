@@ -26,6 +26,14 @@ Game::Game() {
     this->movesHistory = movesHistory;
 }
 
+Game::~Game() {
+    for(auto& player : this->players) {
+        delete player;
+    }
+    delete this->movesHistory;
+    delete this->chessBoard;
+}
+
 void Game::endGame() {
     this->setWinner(this->getCurrentPlayer());
     this->getPlayers()[0]->getTimer()->pauseTimer();
@@ -126,13 +134,9 @@ std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
         return possibleMoves;
     }
 
-    qDebug()<<"xd" << checkingPiece->getName();
-
-    // Check all possible moves of all pieces of the king's color
     int originalPosX = king->getPosX();
     int originalPosY = king->getPosY();
 
-    // Check for king possbile moves to avoid checkmate
     for (int row = -1; row <= 1; ++row) {
         for (int col = -1; col <= 1; ++col) {
             if (row == 0 && col == 0)
@@ -170,12 +174,10 @@ std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
         }
     }
 
-    qDebug() << "Kings possible moves: ";
-    for(auto& move : possibleMoves) {
-        qDebug()<< "Move X: " << move.x << " Move Y: "<< move.y;
-    }
-
-    // Check for other pieces moves to prevent checkmate
+    // qDebug() << "Kings possible moves: ";
+    // for(auto& move : possibleMoves) {
+    //     qDebug()<< "Move X: " << move.x << " Move Y: "<< move.y;
+    // }
 
     for (auto row : board) {
         for (auto piece : row) {
@@ -184,11 +186,9 @@ std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
             }
             qDebug() << piece->getName();
 
-            // Save the current position of the piece
             int oriPosX = piece->getPosX();
             int oriPosY = piece->getPosY();
 
-            // Check all possible moves of the piece
             for(int potentialPosX = 0; potentialPosX < 8; potentialPosX++) {
                 for(int potentialPosY = 0; potentialPosY < 8; potentialPosY++) {
                     if(potentialPosX == oriPosX && potentialPosY == oriPosY) {
@@ -196,7 +196,6 @@ std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
                     }
 
                     if(piece->isValidMove(potentialPosX, potentialPosY, board, kingColor)) {
-                        // Move the piece
                         piece->setPosX(potentialPosX);
                         piece->setPosY(potentialPosY);
 
@@ -234,12 +233,11 @@ std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
         }
     }
 
-    qDebug() << "All possible moves: ";
-    for(auto& move : possibleMoves) {
-        qDebug()<< "Move X: " << move.x << " Move Y: "<< move.y;
-    }
+    // qDebug() << "All possible moves: ";
+    // for(auto& move : possibleMoves) {
+    //     qDebug()<< "Move X: " << move.x << " Move Y: "<< move.y;
+    // }
 
-    // If no move can get the king out of check, it is checkmate
     return possibleMoves;
 }
 
@@ -271,7 +269,7 @@ void Game::makeMove(int row, int col) {
         }
 
         if(isCheck(playerKingPiece)) {
-            qDebug() << playerKingPiece->getName() << " is checked";
+            // qDebug() << playerKingPiece->getName() << " is checked";
             std::vector<Game::Movement> possibleMoves = isCheckmate(playerKingPiece);
             std::vector<Game::Movement> piecePossibleMoves;
 
@@ -286,10 +284,10 @@ void Game::makeMove(int row, int col) {
                 }
             }
 
-            qDebug() << "Piece moves:";
-            for(auto pieceMove : piecePossibleMoves) {
-                qDebug() << "X: " <<pieceMove.x << " Y: "<<pieceMove.y;
-            }
+            // qDebug() << "Piece moves:";
+            // for(auto pieceMove : piecePossibleMoves) {
+            //     qDebug() << "X: " <<pieceMove.x << " Y: "<<pieceMove.y;
+            // }
 
             bool pieceCanMove = false;
 

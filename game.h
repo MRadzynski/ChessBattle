@@ -58,6 +58,8 @@ public:
      */
     Game();
 
+    ~Game();
+
     /**
      * @brief Initializes the game.
      */
