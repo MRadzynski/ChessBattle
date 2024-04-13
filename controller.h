@@ -14,11 +14,6 @@ private:
     Model *model; ///< The pointer to the model instance.
     View *view; ///< The pointer to the view instance.
 
-    struct Movement {
-        int x;
-        int y;
-    };
-
 private slots:
 
     /**
