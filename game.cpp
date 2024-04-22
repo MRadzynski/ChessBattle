@@ -4,6 +4,7 @@
 #include "knight.h"
 #include "queen.h"
 #include "rook.h"
+#include "pawn.h"
 
 #include <string>
 #include <QDebug>
@@ -24,6 +25,14 @@ Game::Game() {
     this->players = players;
     this->winner = winner;
     this->movesHistory = movesHistory;
+}
+
+Game::~Game() {
+    for(auto& player : this->players) {
+        delete player;
+    }
+    delete this->movesHistory;
+    delete this->chessBoard;
 }
 
 void Game::endGame() {
@@ -115,6 +124,124 @@ ChessPiece* Game::isCheck(ChessPiece* king) {
     return nullptr;
 }
 
+std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
+    std::vector<std::vector<ChessPiece*>> board = this->getChessBoard()->getChessBoardState();
+    PieceColor kingColor = king->getColor();
+    ChessPiece* checkingPiece = isCheck(king);
+
+    std::vector<Game::Movement> possibleMoves;
+
+    if(checkingPiece == nullptr) {
+        return possibleMoves;
+    }
+
+    int originalPosX = king->getPosX();
+    int originalPosY = king->getPosY();
+
+    for (int row = -1; row <= 1; ++row) {
+        for (int col = -1; col <= 1; ++col) {
+            if (row == 0 && col == 0)
+                continue;
+
+            int posX = king->getPosX() + row;
+            int posY = king->getPosY() + col;
+
+            if (posX >= 0 && posX < 8 && posY >= 0 && posY < 8) {
+                bool isValidMove = king->isValidMove(posX,posY, board, king->getColor());
+
+                if(isValidMove) {
+                    king->setPosX(posX);
+                    king->setPosY(posY);
+
+                    ChessPiece* pieceOnBoardPlace = board[posX][posY];
+
+                    board[originalPosX][originalPosY] = nullptr;
+                    board[posX][posY] = king;
+                    this->getChessBoard()->setChessBoardState(board);
+
+                    ChessPiece* newCheckingPiece = isCheck(king);
+
+                    king->setPosX(originalPosX);
+                    king->setPosY(originalPosY);
+                    board[originalPosX][originalPosY] = king;
+                    board[posX][posY] = pieceOnBoardPlace;
+                    this->getChessBoard()->setChessBoardState(board);
+
+                    if(newCheckingPiece == nullptr) {
+                        possibleMoves.push_back({posX, posY});
+                    }
+                }
+            }
+        }
+    }
+
+    // qDebug() << "Kings possible moves: ";
+    // for(auto& move : possibleMoves) {
+    //     qDebug()<< "Move X: " << move.x << " Move Y: "<< move.y;
+    // }
+
+    for (auto row : board) {
+        for (auto piece : row) {
+            if(piece == nullptr || piece->getColor() != kingColor || piece == king) {
+                continue;
+            }
+            //qDebug() << piece->getName();
+
+            int oriPosX = piece->getPosX();
+            int oriPosY = piece->getPosY();
+
+            for(int potentialPosX = 0; potentialPosX < 8; potentialPosX++) {
+                for(int potentialPosY = 0; potentialPosY < 8; potentialPosY++) {
+                    if(potentialPosX == oriPosX && potentialPosY == oriPosY) {
+                        continue;
+                    }
+
+                    if(piece->isValidMove(potentialPosX, potentialPosY, board, kingColor)) {
+                        piece->setPosX(potentialPosX);
+                        piece->setPosY(potentialPosY);
+
+                        ChessPiece* pieceOnBoardPlace = board[potentialPosX][potentialPosY];
+
+                        board[oriPosX][oriPosY] = nullptr;
+                        board[potentialPosX][potentialPosY] = piece;
+                        this->getChessBoard()->setChessBoardState(board);
+
+                        ChessPiece* newCheckingPiece = isCheck(king);
+
+                        piece->setPosX(oriPosX);
+                        piece->setPosY(oriPosY);
+                        board[oriPosX][oriPosY] = piece;
+                        board[potentialPosX][potentialPosY] = pieceOnBoardPlace;
+                        this->getChessBoard()->setChessBoardState(board);
+
+                        if(newCheckingPiece == nullptr) {
+                            bool isNewMove = true;
+
+                            for(auto move : possibleMoves) {
+                                if(move.x == potentialPosX && move.y == potentialPosY) {
+                                    isNewMove = false;
+                                    break;
+                                }
+                            }
+
+                            if(isNewMove) {
+                                possibleMoves.push_back({potentialPosX, potentialPosY});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // qDebug() << "All possible moves: ";
+    // for(auto& move : possibleMoves) {
+    //     qDebug()<< "Move X: " << move.x << " Move Y: "<< move.y;
+    // }
+
+    return possibleMoves;
+}
+
 void Game::makeMove(int row, int col) {
     if(this->getWinner() != nullptr) return;
 
@@ -126,41 +253,164 @@ void Game::makeMove(int row, int col) {
     } else {
         ChessPiece* selectedPiece = this->getChessBoard()->getSelectedPiece();
 
-        bool isValidMove = selectedPiece->isValidMove(row, col, this->getChessBoard()->getChessBoardState(), this->currentPlayer->getColor());
-
-        if(isValidMove) {
-            int selectedPiecePosX = selectedPiece->getPosX();
-            int selectedPiecePosY = selectedPiece->getPosY();
-            std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
-
-            selectedPiece->setPosX(row);
-            selectedPiece->setPosY(col);
-            newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
-
-            if(newChessBoardState[row][col] != nullptr) {
-                if(newChessBoardState[row][col]->getName() == "BKG" || newChessBoardState[row][col]->getName() == "WKG") {
-                    this->endGame();
-                    return;
-                }
-                delete newChessBoardState[row][col];
-            }
-
-            HistoryLog* historyMove = new HistoryLog();
-            historyMove->pieceIcon = selectedPiece->getIconPath();
-            historyMove->posBefore = this->getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
-            historyMove->posAfter = this->getChessBoardCoords(row, col);
-
-            if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
-                ChessPiece* promotedPiece = this->promotePawn(selectedPiece);
-                newChessBoardState[row][col] = promotedPiece;
-            } else {
-                newChessBoardState[row][col] = selectedPiece;
-            }
-
-            this->getMovesHistory()->addNewLog(historyMove);
-            this->getChessBoard()->setChessBoardState(newChessBoardState);
+        if(selectedPiece->getPosX() == row && selectedPiece->getPosY() == col) {
             this->getChessBoard()->setSelectedPiece(nullptr);
-            this->switchPlayer();
+            return;
+        }
+
+        ChessPiece* playerKingPiece = nullptr;
+
+        for(auto& row : this->getChessBoard()->getChessBoardState()) {
+            for(auto& piece : row) {
+                if(piece != nullptr && piece->getColor() == this->getCurrentPlayer()->getColor() && piece->getName().find("KG") != std::string::npos) {
+                    playerKingPiece = piece;
+                    break;
+                }
+            }
+        }
+
+        if(isCheck(playerKingPiece)) {
+            // qDebug() << playerKingPiece->getName() << " is checked";
+            std::vector<Game::Movement> possibleMoves = isCheckmate(playerKingPiece);
+            std::vector<Game::Movement> piecePossibleMoves;
+
+            if(possibleMoves.empty()) {
+                this->endGame();
+                return;
+            }
+
+            for(auto possibleMove : possibleMoves) {
+                if(selectedPiece->isValidMove(possibleMove.x, possibleMove.y, this->getChessBoard()->getChessBoardState(), this->getCurrentPlayer()->getColor())) {
+                    piecePossibleMoves.push_back(possibleMove);
+                }
+            }
+
+            // qDebug() << "Piece moves:";
+            // for(auto pieceMove : piecePossibleMoves) {
+            //     qDebug() << "X: " <<pieceMove.x << " Y: "<<pieceMove.y;
+            // }
+
+            bool pieceCanMove = false;
+
+            for(auto pieceMove : piecePossibleMoves) {
+                if(pieceMove.x == row && pieceMove.y == col) {
+                    pieceCanMove = true;
+                }
+            }
+
+            if(pieceCanMove) {
+                int selectedPiecePosX = selectedPiece->getPosX();
+                int selectedPiecePosY = selectedPiece->getPosY();
+
+                std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
+
+                selectedPiece->setPosX(row);
+                selectedPiece->setPosY(col);
+                newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
+
+                if(newChessBoardState[row][col] != nullptr) {
+                    delete newChessBoardState[row][col];
+                }
+
+                HistoryLog* historyMove = new HistoryLog();
+                historyMove->pieceIcon = selectedPiece->getIconPath();
+                historyMove->posBefore = this->getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
+                historyMove->posAfter = this->getChessBoardCoords(row, col);
+
+                if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
+                    ChessPiece* promotedPiece = this->promotePawn(selectedPiece);
+                    newChessBoardState[row][col] = promotedPiece;
+                } else {
+                    newChessBoardState[row][col] = selectedPiece;
+                }
+
+                this->getMovesHistory()->addNewLog(historyMove);
+                this->getChessBoard()->setChessBoardState(newChessBoardState);
+                this->getChessBoard()->setSelectedPiece(nullptr);
+                this->switchPlayer();
+
+            }
+
+            return;
+        } else {
+            bool isValidMove = selectedPiece->isValidMove(row, col, this->getChessBoard()->getChessBoardState(), this->getCurrentPlayer()->getColor());
+
+            if(isValidMove) {
+                int selectedPiecePosX = selectedPiece->getPosX();
+                int selectedPiecePosY = selectedPiece->getPosY();
+                std::vector<std::vector<ChessPiece*>> newChessBoardState = this->getChessBoard()->getChessBoardState();
+
+                selectedPiece->setPosX(row);
+                selectedPiece->setPosY(col);
+                newChessBoardState[selectedPiecePosX][selectedPiecePosY] = nullptr;
+
+                if(newChessBoardState[row][col] != nullptr) {
+                    if(newChessBoardState[row][col]->getName() == "BKG" || newChessBoardState[row][col]->getName() == "WKG") {
+                        this->endGame();
+                        return;
+                    }
+                    delete newChessBoardState[row][col];
+                } else {
+                    if(this->getCurrentPlayer()->getColor() == PieceColor::WHITE) {
+                        if(row+1 < 8 && newChessBoardState[row+1][col] != nullptr && newChessBoardState[row+1][col]->getName() == "BPN") {
+                            ChessPiece* piece = newChessBoardState[row+1][col];
+                            Pawn* pawn = dynamic_cast<Pawn*>(piece);
+
+                            if((row == pawn->getInitPosX() || row-1 == pawn->getInitPosX()) && col == pawn->getInitPosY()) {
+                                delete newChessBoardState[row+1][col];
+                                newChessBoardState[row+1][col] = nullptr;
+                            }
+                        }
+                    } else {
+                        if(row-1 > -1 && newChessBoardState[row-1][col] != nullptr && newChessBoardState[row-1][col]->getName() == "WPN") {
+                            ChessPiece* piece = newChessBoardState[row-1][col];
+                            Pawn* pawn = dynamic_cast<Pawn*>(piece);
+
+                            if((row == pawn->getInitPosX() || row+1 == pawn->getInitPosX()) && col == pawn->getInitPosY()) {
+                                delete newChessBoardState[row-1][col];
+                                newChessBoardState[row-1][col] = nullptr;
+                            }
+                        }
+                    }
+                }
+
+                HistoryLog* historyMove = new HistoryLog();
+                historyMove->pieceIcon = selectedPiece->getIconPath();
+                historyMove->posBefore = this->getChessBoardCoords(selectedPiecePosX, selectedPiecePosY);
+                historyMove->posAfter = this->getChessBoardCoords(row, col);
+
+                if(row == 0 && selectedPiece->getName() == "WPN" || row == 7 && selectedPiece->getName() == "BPN") {
+                    ChessPiece* promotedPiece = this->promotePawn(selectedPiece);
+                    newChessBoardState[row][col] = promotedPiece;
+                } else {
+                    newChessBoardState[row][col] = selectedPiece;
+                }
+
+                this->getMovesHistory()->addNewLog(historyMove);
+                this->getChessBoard()->setChessBoardState(newChessBoardState);
+                this->getChessBoard()->setSelectedPiece(nullptr);
+                this->switchPlayer();
+
+                ChessPiece* kingPiece = nullptr;
+
+                for(auto& row : this->getChessBoard()->getChessBoardState()) {
+                    for(auto& piece : row) {
+                        if(piece != nullptr && piece->getColor() == this->getCurrentPlayer()->getColor() && piece->getName().find("KG") != std::string::npos) {
+                            kingPiece = piece;
+                            break;
+                        }
+                    }
+                }
+
+                qDebug()<< kingPiece->getName();
+                if(isCheck(kingPiece)) {
+                    std::vector<Game::Movement> possibleMovements = isCheckmate(kingPiece);
+
+                    if(possibleMovements.empty()) {
+                        this->endGame();
+                    }
+                }
+            }
         }
     }
 }

@@ -38,6 +38,8 @@ public:
      */
     Timer(int remainingTime);
 
+    ~Timer();
+
     /**
      * @brief Pauses the timer.
      */

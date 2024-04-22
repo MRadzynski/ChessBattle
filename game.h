@@ -36,13 +36,6 @@ private:
     QString getChessBoardCoords(int posX, int posY);
 
     /**
-     * @brief Checks if the king is in check.
-     * @param king The king chess piece.
-     * @return The chess piece that is checking the king, or nullptr if the king is not in check.
-     */
-    ChessPiece* isCheck(ChessPiece* king);
-
-    /**
      * @brief Promotes a pawn.
      * @param selectedPiece The selected chess piece.
      * @return The promoted chess piece.
@@ -54,18 +47,35 @@ private:
      */
     void switchPlayer();
 
-public:
+public:    
+    struct Movement {
+        int x;
+        int y;
+    };
+
     /**
      * @brief Constructs a new Game object.
      */
     Game();
 
+    ~Game();
+
     /**
      * @brief Initializes the game.
      */
     void initGame();
+
+    /**
+     * @brief Checks if the king is in check.
+     * @param king The king chess piece.
+     * @return The chess piece that is checking the king, or nullptr if the king is not in check.
+     */
+    ChessPiece* isCheck(ChessPiece* king);
     
-   /**
+
+    std::vector<Movement> isCheckmate(ChessPiece* king);
+
+    /**
      * @brief Makes a move.
      * @param row The row to move to.
      * @param col The column to move to.

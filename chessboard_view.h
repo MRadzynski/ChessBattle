@@ -3,6 +3,7 @@
 
 #include "chess_piece.h"
 #include "ui_view.h"
+#include "game.h"
 
 /**
  * @class ChessboardView
@@ -24,6 +25,8 @@ public:
      * @param chessBoard The current state of the chess board.
      */
     void highlightSelectedPiece(ChessPiece* selectedPiece, std::vector<std::vector<ChessPiece*>> chessBoard);
+
+    void highlightSelectedPieceInCheck(ChessPiece* selectedPiece, std::vector<std::vector<ChessPiece*>> chessBoard, std::vector<Game::Movement> validMoves);
 
     /**
      * @brief Renders the chess board in the UI.

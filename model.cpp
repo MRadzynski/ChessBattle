@@ -5,6 +5,10 @@ Model::Model() {
     this->game = game;
 }
 
+Model::~Model() {
+    delete this->game;
+}
+
 Game* Model::getGame() {
     return this->game;
 }

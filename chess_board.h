@@ -31,6 +31,8 @@ public:
      */
     ChessBoard();
 
+    ~ChessBoard();
+
     /**
      * @brief Displays the current state of the chess board.
      */
@@ -40,13 +42,6 @@ public:
      * @brief Initializes the chess board with the standard setup of pieces.
      */
     void initializeChessBoard();
-
-    /**
-     * @brief Checks if the current state of the board is a checkmate.
-     * 
-     * @return true if the current state is a checkmate, false otherwise.
-     */
-    bool isCheckMate();
 
     /**
      * @brief Moves the selected piece to the specified row and column.

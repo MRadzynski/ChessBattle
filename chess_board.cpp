@@ -15,6 +15,16 @@ ChessBoard::ChessBoard() {
     this->selectedPiece = nullptr;
 }
 
+ChessBoard::~ChessBoard() {
+    for(auto& row : this->chessBoardState) {
+        for(auto& piece : row) {
+            if(piece != nullptr) {
+                delete piece;
+            }
+        }
+    }
+}
+
 void ChessBoard::initializeChessBoard() {
     std::vector<std::vector<ChessPiece*>> initChessBoardState(8, std::vector<ChessPiece*>(8, nullptr));
 
@@ -118,10 +128,6 @@ void ChessBoard::movePiece(int row, int col) {
         this->setSelectedPiece(nullptr);
     }
     this->displayChessBoardState();
-}
-
-bool ChessBoard::isCheckMate() {
-
 }
 
 std::vector<std::vector<ChessPiece*>> ChessBoard::getChessBoardState() {

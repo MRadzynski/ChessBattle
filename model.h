@@ -17,6 +17,8 @@ public:
      */
     Model();
 
+    ~Model();
+
     /**
      * @brief Gets the Game object.
      * @return Pointer to the Game object.

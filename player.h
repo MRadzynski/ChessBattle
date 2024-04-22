@@ -22,6 +22,8 @@ public:
      */
     Player(PieceColor _color, QString _name);
 
+    ~Player();
+
     /**
      * @brief Gets the color of the player's pieces.
      * @return The color of the pieces.
