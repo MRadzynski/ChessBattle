@@ -4,6 +4,7 @@
 #include "knight.h"
 #include "queen.h"
 #include "rook.h"
+#include "pawn.h"
 
 #include <string>
 #include <QDebug>
@@ -184,7 +185,7 @@ std::vector<Game::Movement> Game::isCheckmate(ChessPiece* king) {
             if(piece == nullptr || piece->getColor() != kingColor || piece == king) {
                 continue;
             }
-            qDebug() << piece->getName();
+            //qDebug() << piece->getName();
 
             int oriPosX = piece->getPosX();
             int oriPosY = piece->getPosY();
@@ -349,6 +350,28 @@ void Game::makeMove(int row, int col) {
                         return;
                     }
                     delete newChessBoardState[row][col];
+                } else {
+                    if(this->getCurrentPlayer()->getColor() == PieceColor::WHITE) {
+                        if(row+1 < 8 && newChessBoardState[row+1][col] != nullptr && newChessBoardState[row+1][col]->getName() == "BPN") {
+                            ChessPiece* piece = newChessBoardState[row+1][col];
+                            Pawn* pawn = dynamic_cast<Pawn*>(piece);
+
+                            if((row == pawn->getInitPosX() || row-1 == pawn->getInitPosX()) && col == pawn->getInitPosY()) {
+                                delete newChessBoardState[row+1][col];
+                                newChessBoardState[row+1][col] = nullptr;
+                            }
+                        }
+                    } else {
+                        if(row-1 > -1 && newChessBoardState[row-1][col] != nullptr && newChessBoardState[row-1][col]->getName() == "WPN") {
+                            ChessPiece* piece = newChessBoardState[row-1][col];
+                            Pawn* pawn = dynamic_cast<Pawn*>(piece);
+
+                            if((row == pawn->getInitPosX() || row+1 == pawn->getInitPosX()) && col == pawn->getInitPosY()) {
+                                delete newChessBoardState[row-1][col];
+                                newChessBoardState[row-1][col] = nullptr;
+                            }
+                        }
+                    }
                 }
 
                 HistoryLog* historyMove = new HistoryLog();
